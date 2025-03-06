@@ -11,12 +11,14 @@ public:
     void setY(double newY);
     double getRadius() const;
     void setRadius(double newRadius);
+
     void Init();
     void Read();
     void Display() const;
     std::string toString() const;
+
     void move(double dx, double dy);
     void resize(double newRadius);
     void rotate(double angle);
+    void promptAndResize();
 };
-

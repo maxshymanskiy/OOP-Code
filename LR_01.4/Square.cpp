@@ -1,38 +1,47 @@
-﻿#include "Square.h"
-#include <iostream>
-#include <string>
+﻿#include "square.h"
+#include "utilities.h"
 #include <cmath>
+#include <sstream>
+
 using namespace std;
 
 double Square::getX() const { return x; }
-void Square::setX(double newX) { x = newX; }
 double Square::getY() const { return y; }
-void Square::setY(double newY) { y = newY; }
 double Square::getSide() const { return side; }
-void Square::setSide(double s) { side = s; }
 double Square::getAngle() const { return angle; }
-void Square::setAngle(double a) { angle = a; }
+
+void Square::setX(double newX) { x = newX; }
+void Square::setY(double newY) { y = newY; }
+void Square::setSide(double newSide) {
+    side = (newSide > 0) ? newSide : 1.0;
+}
+void Square::setAngle(double newAngle) {
+    angle = fmod(newAngle, 360.0);
+    if (angle < 0) angle += 360.0;
+}
 
 void Square::Init() {
-    x = y = angle = 0.0;
-    side = 1.0;
+    x = y = 0.0;
+    setSide(1.0);
+    setAngle(0.0);
 }
 
 void Square::Read() {
-    cout << "x: "; cin >> x;
-    cout << "y: "; cin >> y;
-    cout << "side: "; cin >> side;
-    cout << "angle: "; cin >> angle;
+    x = readDouble("Enter x: ");
+    y = readDouble("Enter y: ");
+    setSide(readDouble("Enter side: "));
+    setAngle(readDouble("Enter angle: "));
 }
 
 void Square::Display() const {
-    cout << "Square: (" << x << ", " << y << "), side " << side
-        << ", angle " << angle << "°\n";
+    cout << toString() << "\n";
 }
 
-string Square::toString() const {
-    return "Square [x=" + to_string(x) + ", y=" + to_string(y)
-        + ", s=" + to_string(side) + ", θ=" + to_string(angle) + "]";
+std::string Square::toString() const {
+    std::stringstream ss;
+    ss << "Square [x=" << x << ", y=" << y
+        << ", side=" << side << ", angle=" << angle << "°]";
+    return ss.str();
 }
 
 void Square::move(double dx, double dy) {
@@ -40,11 +49,14 @@ void Square::move(double dx, double dy) {
     y += dy;
 }
 
-void Square::resize(double s) {
-    side = s;
+void Square::resize(double newSide) {
+    setSide(newSide);
 }
 
 void Square::rotate(double delta) {
-    angle = fmod(angle + delta, 360.0);
-    if (angle < 0) angle += 360.0;
+    setAngle(angle + delta);
+}
+
+void Square::promptAndResize() {
+    resize(readDouble("Enter new side: "));
 }
