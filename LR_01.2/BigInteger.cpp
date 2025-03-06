@@ -1,19 +1,15 @@
 ﻿#include "BigInteger.h"
 
 void BigInteger::setNumber(const string& num) {
-    number = num;
-}
-
-bool BigInteger::Init(const string& num) {
     if (num.empty()) {
         cout << "Помилка: порожній рядок" << endl;
-        return false;
+        return;
     }
 
     for (char c : num) {
         if (!isdigit(c)) {
             cout << "Помилка: рядок містить недопустимі символи" << endl;
-            return false;
+            return;
         }
     }
 
@@ -23,6 +19,14 @@ bool BigInteger::Init(const string& num) {
     }
 
     number = cleanNum;
+}
+
+bool BigInteger::Init(const string& num) {
+    string prevNumber = number;
+    setNumber(num);
+    if (number == prevNumber && number != num) {
+        return false;
+    }
     return true;
 }
 
@@ -39,19 +43,39 @@ void BigInteger::Display() const {
 }
 
 bool BigInteger::operator==(const BigInteger& other) const {
+    if (number.length() != other.number.length()) {
+        return false;
+    }
     return number == other.number;
 }
 
 bool BigInteger::operator<(const BigInteger& other) const {
-    if (number.length() != other.number.length())
+    if (number.length() != other.number.length()) {
         return number.length() < other.number.length();
+    }
     return number < other.number;
 }
 
 bool BigInteger::operator>(const BigInteger& other) const {
-    return !(*this < other) && !(*this == other);
+    if (number.length() != other.number.length()) {
+        return number.length() > other.number.length();
+    }
+    return number > other.number;
 }
 
+bool BigInteger::operator<=(const BigInteger& other) const {
+    return (*this < other) || (*this == other);
+}
+
+bool BigInteger::operator>=(const BigInteger& other) const {
+    return (*this > other) || (*this == other);
+}
+
+bool BigInteger::operator!=(const BigInteger& other) const {
+    return !(*this == other);
+}
+
+    
 BigInteger makeBigInteger(const string& num) {
     BigInteger temp;
     if (!temp.Init(num)) {

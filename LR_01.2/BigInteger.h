@@ -21,6 +21,9 @@ public:
     bool operator==(const BigInteger& other) const;
     bool operator<(const BigInteger& other) const;
     bool operator>(const BigInteger& other) const;
+    bool operator<=(const BigInteger& other) const;
+    bool operator!=(const BigInteger& other) const;
+    bool operator>=(const BigInteger& other) const;
 };
 
 BigInteger makeBigInteger(const string& num);

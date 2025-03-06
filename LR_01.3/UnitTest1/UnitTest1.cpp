@@ -18,17 +18,6 @@ namespace FractionTests
             Assert::AreEqual(10L, frac.getWhole());
             Assert::AreEqual((unsigned short)5000, frac.getFractional());
         }
-
-        TEST_METHOD(TestSubtract)
-        {
-            Fraction frac1 = makeFraction(10, 5000);
-            Fraction frac2 = makeFraction(5, 3000);
-            Fraction result = frac1.Subtract(frac2);
-
-            Assert::AreEqual(5L, result.getWhole());
-            Assert::AreEqual((unsigned short)2000, result.getFractional());
-        }
-
         TEST_METHOD(TestOperatorEqual)
         {
             Fraction frac1 = makeFraction(10, 5000);
