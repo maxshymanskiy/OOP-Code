@@ -65,22 +65,28 @@ std::string Fraction::toString() const {
     return ss.str();
 }
 
-Fraction Subtract(const Fraction& f1, const Fraction& f2) {
+Fraction Fraction::toFraction(double x) {
     Fraction result;
-
-    result.whole = f1.whole - f2.whole;
-
-    if (f1.fractional < f2.fractional) {
-        result.whole -= 1;
-        result.fractional = static_cast<unsigned short>(f1.fractional + 100000 - f2.fractional); // 5 digits,  перетворення типу
-    }
-    else {
-        result.fractional = static_cast<unsigned short>(f1.fractional - f2.fractional);
-    }
-
+    result.whole = static_cast<long>(x);
+    result.fractional = static_cast<unsigned short>((x - result.whole) * 100000);
     return result;
 }
 
+Fraction Subtract(const Fraction& f1, const Fraction& f2) {
+    double val1 = static_cast<double>(f1);
+    double val2 = static_cast<double>(f2);
+
+    double result = val1 - val2;
+
+    Fraction resultFraction;
+
+    resultFraction.whole = static_cast<long>(result);
+
+    double fractionalPart = std::abs(result - resultFraction.whole);
+    resultFraction.fractional = static_cast<unsigned short>(fractionalPart * 100000 + 0.5);
+
+    return resultFraction;
+}
 bool Fraction::operator==(const Fraction& other) const {
     return (whole == other.whole) && (fractional == other.fractional);
 }
