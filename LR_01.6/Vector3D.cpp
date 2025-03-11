@@ -15,7 +15,9 @@ void Vector3D::Triad::Read()
         string input;
         getline(cin, input);
         stringstream ss(input);
+        int x, y, z;
         if (ss >> x >> y >> z && ss.eof()) {
+            Init(x, y, z);
             break;
         }
         cout << "Invalid input. Please enter three integers: ";
@@ -35,18 +37,20 @@ std::string Vector3D::Triad::toString() const
     return ss.str();
 }
 
-void Vector3D::Triad::addNumber(int number)
+Vector3D::Triad& Vector3D::Triad::addNumber(int number)
 {
     x += number;
     y += number;
     z += number;
+    return *this;
 }
 
-void Vector3D::Triad::multiplyByNumber(int number)
+Vector3D::Triad& Vector3D::Triad::multiplyByNumber(int number)
 {
     x *= number;
     y *= number;
     z *= number;
+    return *this;
 }
 
 bool Vector3D::Triad::isEqual(const Triad& other) const

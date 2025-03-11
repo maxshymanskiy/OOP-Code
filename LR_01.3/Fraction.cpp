@@ -3,54 +3,44 @@
 #include <sstream>
 #include <iomanip>
 #include <cstdlib>
-#include <limits>
+#include <limits.h>
 
 using namespace std;
 
-void Fraction::setWhole(long value) {
+bool Fraction::setWhole(long value) {
     if (value < 0) {
-        cout << "Error: Whole part cannot be negative. Terminating program.\n";
-        exit(EXIT_FAILURE); // Перериваємо програму з кодом помилки
+        cout << "Error: Whole part cannot be negative.\n";
+        return false;
     }
-    else {
-        whole = value;
-    }
+    whole = value;
+    return true;
 }
 
-void Fraction::setFractional(unsigned short value) {
+bool Fraction::setFractional(unsigned short value) {
     if (value > USHRT_MAX) {
-        cout << "Error: Value exceeds maximum for unsigned short (65535). Terminating program.\n";
-        exit(EXIT_FAILURE);
+        cout << "Error: Value exceeds maximum for unsigned short (65535).\n";
+        return false;
     }
     fractional = value;
+    return true;
 }
 
 
 bool Fraction::Init(long wholePart, unsigned short fractionalPart) {
-    setWhole(wholePart);
-    setFractional(fractionalPart);
-    return true;
+    return setWhole(wholePart) && setFractional(fractionalPart);
 }
 
 void Fraction::Read() {
     long wholePart;
-    unsigned int tempFractional; 
+    unsigned int tempFractional;
 
-    cout << "Enter whole part: ";
-    while (!(cin >> wholePart) || wholePart < 0) {
+    cout << "Enter whole and fractional parts: ";
+    while (!(cin >> wholePart >> tempFractional) ||
+        !Init(wholePart, static_cast<unsigned short>(tempFractional))) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input! Whole part must be >= 0. Try again: ";
+        cout << "Invalid input! Try again: ";
     }
-    setWhole(wholePart);
-
-    cout << "Enter fractional part (0-" << USHRT_MAX << "): ";
-    while (!(cin >> tempFractional) || tempFractional > USHRT_MAX) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input! Enter a number between 0 and " << USHRT_MAX << ": ";
-    }
-    setFractional(static_cast<unsigned short>(tempFractional));
 }
 
 

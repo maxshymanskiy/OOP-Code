@@ -25,8 +25,8 @@ public:
         void Display() const;
         std::string toString() const;
 
-        void addNumber(int number);
-        void multiplyByNumber(int number);
+        Triad& addNumber(int number);     
+        Triad& multiplyByNumber(int number);
         bool isEqual(const Triad& other) const;
     };
 

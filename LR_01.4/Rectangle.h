@@ -1,5 +1,8 @@
 // rectangle.h
 #pragma once
+#include "utilities.h"
+#include <cmath>
+#include <sstream>
 #include <string>
 class Rectangle {
 private:
@@ -15,9 +18,11 @@ public:
     bool setWidth(double newWidth);
     bool setHeight(double newHeight);
     bool setAngle(double newAngle);
-    bool Init();
+
+    bool Init(double newX, double newY, double newWidth, double newHeight, double newAngle);
     void Read();
     void Display() const;
+
     std::string toString() const;
     void move(double dx, double dy);
     bool resize(double newWidth, double newHeight);

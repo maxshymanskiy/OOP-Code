@@ -6,6 +6,7 @@ using namespace std;
 class Triad {
 private:
     int x, y, z;
+
 public:
     int getX() const { return x; }
     int getY() const { return y; }
@@ -19,9 +20,9 @@ public:
     void Display() const;
     void Read();
 
-    void addNumber(int number);
-    void multiplyByNumber(int number);
-    bool isEqual(const Triad& other) const;
+    Triad& addNumber(int number);     
+    Triad& multiplyByNumber(int number); 
 
+    bool isEqual(const Triad& other) const;
     std::string toString() const;
 };

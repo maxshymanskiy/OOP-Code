@@ -1,8 +1,4 @@
-﻿// rectangle.cpp
-#include "rectangle.h"
-#include "utilities.h"
-#include <cmath>
-#include <sstream>
+﻿#include "rectangle.h"
 using namespace std;
 
 double Rectangle::getX() const { return x; }
@@ -43,23 +39,35 @@ bool Rectangle::setAngle(double newAngle) {
     return true;  
 }
 
-bool Rectangle::Init() {
-    x = 0.0;
-    y = 0.0;
-    bool widthSet = setWidth(1.0);
-    bool heightSet = setHeight(1.0);
-    bool angleSet = setAngle(0.0);
+bool Rectangle::Init(double newX, double newY, double newWidth, double newHeight, double newAngle) {
+    if (!setWidth(newWidth) || !setHeight(newHeight) || !setAngle(newAngle)) {
+        return false;  
+    }
 
-    return widthSet && heightSet && angleSet;
+    x = newX;
+    y = newY;
+    return true;
 }
 
 void Rectangle::Read() {
-    x = readDouble("Enter x: ");
-    y = readDouble("Enter y: ");
-    setWidth(readDouble("Enter width: "));
-    setHeight(readDouble("Enter height: "));
-    setAngle(readDouble("Enter angle: "));
+    double newX, newY, newWidth, newHeight, newAngle;
+
+    do {
+        newX = readDouble("Enter x: ");
+        newY = readDouble("Enter y: ");
+        newWidth = readDouble("Enter width: ");
+        newHeight = readDouble("Enter height: ");
+        newAngle = readDouble("Enter angle: ");
+
+        if (!Init(newX, newY, newWidth, newHeight, newAngle)) {
+            cout << "Invalid input. Please try again.\n";
+        }
+
+    } while (!Init(newX, newY, newWidth, newHeight, newAngle)); 
+
+    cout << "Rectangle initialized successfully!\n";
 }
+
 
 void Rectangle::Display() const {
     cout << toString() << "\n";
