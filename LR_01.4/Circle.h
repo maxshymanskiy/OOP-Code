@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-
 class Circle {
 private:
     double x, y, radius;
@@ -10,15 +9,13 @@ public:
     double getY() const;
     void setY(double newY);
     double getRadius() const;
-    void setRadius(double newRadius);
-
-    void Init();
+    bool setRadius(double newRadius);
+    bool Init();
     void Read();
     void Display() const;
     std::string toString() const;
-
     void move(double dx, double dy);
-    void resize(double newRadius);
-    void rotate(double angle);
-    void promptAndResize();
+    bool resize(double newRadius);  
+    bool rotate(double angle);      
+    bool promptAndResize();        
 };

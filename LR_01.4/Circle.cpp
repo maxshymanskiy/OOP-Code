@@ -6,15 +6,23 @@ double Circle::getX() const { return x; }
 void Circle::setX(double newX) { x = newX; }
 double Circle::getY() const { return y; }
 void Circle::setY(double newY) { y = newY; }
-
 double Circle::getRadius() const { return radius; }
-void Circle::setRadius(double newRadius) {
-    radius = (newRadius > 0) ? newRadius : 1.0;
+
+bool Circle::setRadius(double newRadius) {
+    if (newRadius >= 0) {
+        radius = newRadius;
+        return true;
+    }
+    else {
+        radius = 0;
+        return false;
+    }
 }
 
-void Circle::Init() {
-    x = y = 0.0;
-    setRadius(1.0);
+bool Circle::Init() {
+    x = 0.0;
+    y = 0.0;
+    return setRadius(1.0);
 }
 
 void Circle::Read() {
@@ -38,12 +46,14 @@ void Circle::move(double dx, double dy) {
     y += dy;
 }
 
-void Circle::resize(double newRadius) {
-    setRadius(newRadius);
+bool Circle::rotate(double angle) {
+    return true;
 }
 
-void Circle::rotate(double) {}
+bool Circle::resize(double newRadius) {
+    return setRadius(newRadius);
+}
 
-void Circle::promptAndResize() {
-    resize(readDouble("Enter new radius: "));
+bool Circle::promptAndResize() {
+    return resize(readDouble("Enter new radius: "));
 }

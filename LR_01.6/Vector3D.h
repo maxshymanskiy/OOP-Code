@@ -4,10 +4,10 @@
 #include <stdexcept>
 using namespace std;
 
-class Vector3D 
+class Vector3D
 {
 public:
-    class Triad 
+    class Triad
     {
     private:
         int x, y, z;
@@ -24,6 +24,10 @@ public:
         void Read();
         void Display() const;
         std::string toString() const;
+
+        void addNumber(int number);
+        void multiplyByNumber(int number);
+        bool isEqual(const Triad& other) const;
     };
 
 private:

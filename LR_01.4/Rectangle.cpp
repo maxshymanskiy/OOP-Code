@@ -1,8 +1,8 @@
-﻿#include "rectangle.h"
+﻿// rectangle.cpp
+#include "rectangle.h"
 #include "utilities.h"
 #include <cmath>
 #include <sstream>
-
 using namespace std;
 
 double Rectangle::getX() const { return x; }
@@ -13,23 +13,44 @@ double Rectangle::getAngle() const { return angle; }
 
 void Rectangle::setX(double newX) { x = newX; }
 void Rectangle::setY(double newY) { y = newY; }
-void Rectangle::setWidth(double newWidth) {
-    width = (newWidth > 0) ? newWidth : 1.0;
-}
-void Rectangle::setHeight(double newHeight) {
-    height = (newHeight > 0) ? newHeight : 1.0;
-}
-void Rectangle::setAngle(double newAngle) {
-    angle = fmod(newAngle, 360.0);  // fmod of 5.3 / 2 is 1.300000 
-    if (angle < 0)                  // (Returns the floating-point remainder of 
-        angle += 360.0;             // numer/denom (rounded towards zero):
+
+bool Rectangle::setWidth(double newWidth) {
+    if (newWidth >= 0) {
+        width = newWidth;
+        return true;
+    }
+    else {
+        width = 0;
+        return false;
+    }
 }
 
-void Rectangle::Init() {
-    x = y = 0.0;
-    setWidth(1.0);
-    setHeight(1.0);
-    setAngle(0.0);
+bool Rectangle::setHeight(double newHeight) {
+    if (newHeight >= 0) {
+        height = newHeight;
+        return true;
+    }
+    else {
+        height = 0;
+        return false;
+    }
+}
+
+bool Rectangle::setAngle(double newAngle) {
+    angle = fmod(newAngle, 360.0);
+    if (angle < 0)
+        angle += 360.0;
+    return true;  
+}
+
+bool Rectangle::Init() {
+    x = 0.0;
+    y = 0.0;
+    bool widthSet = setWidth(1.0);
+    bool heightSet = setHeight(1.0);
+    bool angleSet = setAngle(0.0);
+
+    return widthSet && heightSet && angleSet;
 }
 
 void Rectangle::Read() {
@@ -57,17 +78,16 @@ void Rectangle::move(double dx, double dy) {
     y += dy;
 }
 
-void Rectangle::resize(double newWidth, double newHeight) {
-    setWidth(newWidth);
-    setHeight(newHeight);
+bool Rectangle::resize(double newWidth, double newHeight) {
+    bool widthSet = setWidth(newWidth);
+    bool heightSet = setHeight(newHeight);
+    return widthSet && heightSet;
 }
 
 void Rectangle::rotate(double delta) {
     setAngle(angle + delta);
 }
 
-void Rectangle::promptAndResize() {
-    double w = readDouble("Enter new width: ");
-    double h = readDouble("Enter new height: ");
-    resize(w, h);
+bool Rectangle::promptAndResize() {
+    return resize(readDouble("Enter new width: "), readDouble("Enter new height: "));
 }

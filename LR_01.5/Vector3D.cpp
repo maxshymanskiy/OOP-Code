@@ -1,29 +1,29 @@
 #include "Vector3D.h"
-#include <iostream>
 
-void Vector3D::Init(const Triad& t) 
+void Vector3D::Init(const Triad& t)
 {
     setTriad(t);
 }
 
-void Vector3D::Display() const 
+void Vector3D::Display() const
 {
-    cout << "Vector3D: ";
-    triad.Display();
-    cout << endl;
+    cout << "Vector3D: " << toString() << endl;
 }
 
-void Vector3D::Read() 
+void Vector3D::Read()
 {
     Triad t;
     t.Read();
     Init(t);
 }
 
-Vector3D add(const Vector3D& v1, const Vector3D& v2) 
+string Vector3D::toString() const {
+    return triad.toString();
+}
+
+Vector3D add(const Vector3D& v1, const Vector3D& v2)
 {
     Triad resultTriad;
-
     resultTriad.Init(
         v1.triad.getX() + v2.triad.getX(),
         v1.triad.getY() + v2.triad.getY(),
@@ -35,7 +35,7 @@ Vector3D add(const Vector3D& v1, const Vector3D& v2)
     return result;
 }
 
-int scalarProduct(const Vector3D& v1, const Vector3D& v2) 
+int scalarProduct(const Vector3D& v1, const Vector3D& v2)
 {
     return (v1.triad.getX() * v2.triad.getX() +
         v1.triad.getY() * v2.triad.getY() +

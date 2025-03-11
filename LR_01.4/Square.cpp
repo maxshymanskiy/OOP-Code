@@ -2,7 +2,6 @@
 #include "utilities.h"
 #include <cmath>
 #include <sstream>
-
 using namespace std;
 
 double Square::getX() const { return x; }
@@ -12,18 +11,30 @@ double Square::getAngle() const { return angle; }
 
 void Square::setX(double newX) { x = newX; }
 void Square::setY(double newY) { y = newY; }
-void Square::setSide(double newSide) {
-    side = (newSide > 0) ? newSide : 1.0;
-}
-void Square::setAngle(double newAngle) {
-    angle = fmod(newAngle, 360.0);
-    if (angle < 0) angle += 360.0;
+
+bool Square::setSide(double newSide) {
+    if (newSide >= 0) {
+        side = newSide;
+        return true;
+    }
+    else {
+        side = 0;
+        return false;
+    }
 }
 
-void Square::Init() {
-    x = y = 0.0;
-    setSide(1.0);
-    setAngle(0.0);
+bool Square::setAngle(double newAngle) {
+    angle = fmod(newAngle, 360.0);
+    if (angle < 0) angle += 360.0;
+    return true;  // Always returns true since any angle can be normalized
+}
+
+bool Square::Init() {
+    x = 0.0;
+    y = 0.0;
+    bool sideSet = setSide(1.0);
+    bool angleSet = setAngle(0.0);
+    return sideSet && angleSet;
 }
 
 void Square::Read() {
@@ -49,14 +60,14 @@ void Square::move(double dx, double dy) {
     y += dy;
 }
 
-void Square::resize(double newSide) {
-    setSide(newSide);
+bool Square::resize(double newSide) {
+    return setSide(newSide);
 }
 
-void Square::rotate(double delta) {
-    setAngle(angle + delta);
+bool Square::rotate(double delta) {
+    return setAngle(angle + delta);
 }
 
-void Square::promptAndResize() {
-    resize(readDouble("Enter new side: "));
+bool Square::promptAndResize() {
+    return resize(readDouble("Enter new side: "));
 }

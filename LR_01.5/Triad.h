@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 class Triad {
@@ -15,10 +16,12 @@ public:
     void setZ(int z) { this->z = z; }
 
     void Init(int x, int y, int z);
+    void Display() const;
+    void Read();
+
     void addNumber(int number);
     void multiplyByNumber(int number);
     bool isEqual(const Triad& other) const;
-    void Display() const;
-    void Read();
+
+    std::string toString() const;
 };
- 

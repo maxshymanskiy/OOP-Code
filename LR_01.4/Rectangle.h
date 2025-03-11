@@ -1,6 +1,6 @@
+// rectangle.h
 #pragma once
 #include <string>
-
 class Rectangle {
 private:
     double x, y, width, height, angle;
@@ -10,20 +10,17 @@ public:
     double getWidth() const;
     double getHeight() const;
     double getAngle() const;
-
     void setX(double newX);
     void setY(double newY);
-    void setWidth(double newWidth);
-    void setHeight(double newHeight);
-    void setAngle(double newAngle);
-
-    void Init();
+    bool setWidth(double newWidth);
+    bool setHeight(double newHeight);
+    bool setAngle(double newAngle);
+    bool Init();
     void Read();
     void Display() const;
     std::string toString() const;
-
     void move(double dx, double dy);
-    void resize(double newWidth, double newHeight);
+    bool resize(double newWidth, double newHeight);
     void rotate(double delta);
-    void promptAndResize();
+    bool promptAndResize();
 };
