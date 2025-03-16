@@ -12,8 +12,8 @@ private:
 public:
 	int GetFirst() const { return first; }
 	unsigned int GetSecond() const { return second; }
-	void SetFirst(int value);
-	void SetSecond( int value);
+	bool SetFirst(int value);
+	bool SetSecond( int value);
 
 	bool Init(int k, int n);
 	void Read();

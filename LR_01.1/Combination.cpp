@@ -3,30 +3,36 @@
 
 using namespace std;
 
-void Combination::SetFirst(int value)
-{
+bool Combination::SetFirst(int value) {
+    if (value < 0) {
+        cout << "Error: First value must be non-negative.\n";
+        return false;
+    }
     first = value;
+    return true;
 }
-void Combination::SetSecond(int value)
-{
+
+bool Combination::SetSecond(int value) {
+    if (value < 0 || value <= first) {
+        cout << "Error: Second value must be greater than first and non-negative.\n";
+        return false;
+    }
     second = value;
+    return true;
 }
 
 bool Combination::Init(int k, int n) {
-	if (k > 0 && n > 0 && k < n) {
-		first = k;
-		second = n;
-		return true;
-	}
-	return false;
+    return SetFirst(k) && SetSecond(n);
 }
 
 void Combination::Read() {
     int k, n;
     do {
-        cout << "Input value:" << endl;
-        cout << " k = "; cin >> k;
-        cout << " n = "; cin >> n;
+        cout << "Input values:\n";
+        cout << " k = ";
+        cin >> k;
+        cout << " n = ";
+        cin >> n;
     } while (!Init(k, n));
 }
 
@@ -51,8 +57,6 @@ unsigned long long Combination::combination() const {
     return result;
 }
 
-
-// Функція створення об'єкта з перевіркою
 Combination makeCombination(int k, int n)
 {
     Combination obj;
