@@ -20,11 +20,11 @@ public:
 
     operator std::string() const;
 
-    Vector3D operator+(const Vector3D& other) const;
-    int operator*(const Vector3D& other) const;
+    friend Vector3D operator+(const Vector3D& v1, const Vector3D& v2);
+    friend int operator*(const Vector3D& v1, const Vector3D& v2);
 
-    Vector3D& operator++();
-    Vector3D operator++(int);
-    Vector3D& operator--();
-    Vector3D operator--(int);
+    friend Vector3D& operator++(Vector3D& v);
+    friend Vector3D operator++(Vector3D& v, int);
+    friend Vector3D& operator--(Vector3D& v);
+    friend Vector3D operator--(Vector3D& v, int);
 };

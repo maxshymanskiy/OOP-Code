@@ -1,9 +1,7 @@
 #include "Triad.h"
 
 Triad::Triad() : x(0), y(0), z(0) {}
-
 Triad::Triad(int x, int y, int z) : x(x), y(y), z(z) {}
-
 Triad::Triad(const Triad& other) : x(other.x), y(other.y), z(other.z) {}
 
 int Triad::getX() const { return x; }
@@ -40,54 +38,70 @@ Triad::operator std::string() const {
     return ss.str();
 }
 
-Triad Triad::operator+(int number) const {
-    return Triad(x + number, y + number, z + number);
+Triad operator+(const Triad& t, int number) {
+    return Triad(t.x + number, t.y + number, t.z + number);
 }
 
-Triad& Triad::operator+=(int number) {
-    x += number;
-    y += number;
-    z += number;
-    return *this;
+Triad operator+(int number, const Triad& t) {
+    return Triad(number + t.x, number + t.y, number + t.z);
 }
 
-Triad Triad::operator*(int number) const {
-    return Triad(x * number, y * number, z * number);
+Triad& operator+=(Triad& t, int number) {
+    t.x += number;
+    t.y += number;
+    t.z += number;
+    return t;
 }
 
-Triad& Triad::operator*=(int number) {
-    x *= number;
-    y *= number;
-    z *= number;
-    return *this;
+Triad operator*(const Triad& t, int number) {
+    return Triad(t.x * number, t.y * number, t.z * number);
 }
 
-bool Triad::operator==(const Triad& other) const {
-    return (x == other.x && y == other.y && z == other.z);
+Triad operator*(int number, const Triad& t) {
+    return Triad(number * t.x, number * t.y, number * t.z);
 }
 
-Triad& Triad::operator++() {
-    ++x;
-    ++y;
-    ++z;
-    return *this;
+Triad& operator*=(Triad& t, int number) {
+    t.x *= number;
+    t.y *= number;
+    t.z *= number;
+    return t;
 }
 
-Triad Triad::operator++(int) {
-    Triad temp(*this);
-    ++(*this);
+bool operator==(const Triad& t1, const Triad& t2) {
+    return (t1.x == t2.x && t1.y == t2.y && t1.z == t2.z);
+}
+
+Triad operator+(const Triad& t1, const Triad& t2) {
+    return Triad(t1.x + t2.x, t1.y + t2.y, t1.z + t2.z);
+}
+
+Triad& operator++(Triad& t) {
+    ++t.x;
+    ++t.y;
+    ++t.z;
+    return t;
+}
+
+Triad operator++(Triad& t, int) {
+    Triad temp = t;
+    ++t.x;
+    ++t.y;
+    ++t.z;
     return temp;
 }
 
-Triad& Triad::operator--() {
-    --x;
-    --y;
-    --z;
-    return *this;
+Triad& operator--(Triad& t) {
+    --t.x;
+    --t.y;
+    --t.z;
+    return t;
 }
 
-Triad Triad::operator--(int) {
-    Triad temp(*this);
-    --(*this);
+Triad operator--(Triad& t, int) {
+    Triad temp = t;
+    --t.x;
+    --t.y;
+    --t.z;
     return temp;
 }

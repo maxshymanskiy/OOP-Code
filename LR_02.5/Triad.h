@@ -26,15 +26,17 @@ public:
 
     operator std::string() const;
 
-    Triad operator+(int number) const;
-    Triad& operator+=(int number);
-    Triad operator*(int number) const;
-    Triad& operator*=(int number);
+    friend Triad operator+(const Triad& t, int number);
+    friend Triad operator+(int number, const Triad& t);
+    friend Triad& operator+=(Triad& t, int number);
+    friend Triad operator*(const Triad& t, int number);
+    friend Triad operator*(int number, const Triad& t);
+    friend Triad& operator*=(Triad& t, int number);
+    friend bool operator==(const Triad& t1, const Triad& t2);
+    friend Triad operator+(const Triad& t1, const Triad& t2);
 
-    bool operator==(const Triad& other) const;
-
-    Triad& operator++();
-    Triad operator++(int);
-    Triad& operator--();
-    Triad operator--(int);
+    friend Triad& operator++(Triad& t);
+    friend Triad operator++(Triad& t, int);
+    friend Triad& operator--(Triad& t);
+    friend Triad operator--(Triad& t, int);
 };

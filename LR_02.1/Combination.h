@@ -26,10 +26,10 @@ public:
 
     Combination& operator=(const Combination& c);
 
-    Combination& operator++();
-    Combination operator++(int);
-    Combination& operator--();
-    Combination operator--(int);
+    friend Combination& operator++(Combination& c);       // Префіксний інкремент
+    friend Combination operator++(Combination& c, int);   // Постфіксний інкремент
+    friend Combination& operator--(Combination& c);       // Префіксний декремент
+    friend Combination operator--(Combination& c, int);   // Постфіксний декремент
 
     friend std::ostream& operator<<(std::ostream& out, const Combination& c);
     friend std::istream& operator>>(std::istream& in, Combination& c);

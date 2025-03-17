@@ -41,7 +41,7 @@ Fraction& Fraction::operator=(const Fraction& other) {
     return *this;
 }
 
-Fraction::operator string() const {
+Fraction::operator std::string() const {
     stringstream ss;
     ss << whole << "."
         << setw(5) << setfill('0') << fractional; // 5 цифр для USHRT_MAX
@@ -49,58 +49,53 @@ Fraction::operator string() const {
 }
 
 Fraction& Fraction::operator++() {
-    // Префіксний інкремент (++f)
     whole++;
     return *this;
 }
 
 Fraction Fraction::operator++(int) {
-    // Постфіксний інкремент (f++)
     Fraction temp = *this;
     whole++;
     return temp;
 }
 
 Fraction& Fraction::operator--() {
-    // Префіксний декремент (--f)
     if (whole > 0)
         whole--;
     return *this;
 }
 
 Fraction Fraction::operator--(int) {
-    // Постфіксний декремент (f--)
     Fraction temp = *this;
     if (whole > 0)
         whole--;
     return temp;
 }
 
-bool Fraction::operator==(const Fraction& other) const {
-    return (whole == other.whole) && (fractional == other.fractional);
+bool operator==(const Fraction& f1, const Fraction& f2) {
+    return (f1.whole == f2.whole) && (f1.fractional == f2.fractional);
 }
 
-bool Fraction::operator!=(const Fraction& other) const {
-    return !(*this == other);
+bool operator!=(const Fraction& f1, const Fraction& f2) {
+    return !(f1 == f2);
 }
 
-bool Fraction::operator<(const Fraction& other) const {
-    if (whole != other.whole) return whole < other.whole;
-    return fractional < other.fractional;
+bool operator<(const Fraction& f1, const Fraction& f2) {
+    if (f1.whole != f2.whole) return f1.whole < f2.whole;
+    return f1.fractional < f2.fractional;
 }
 
-bool Fraction::operator>(const Fraction& other) const {
-    return !(*this < other) && !(*this == other);
+bool operator>(const Fraction& f1, const Fraction& f2) {
+    return !(f1 < f2) && !(f1 == f2);
 }
 
-bool Fraction::operator<=(const Fraction& other) const {
-    return (*this < other) || (*this == other);
+bool operator<=(const Fraction& f1, const Fraction& f2) {
+    return (f1 < f2) || (f1 == f2);
 }
 
-bool Fraction::operator>=(const Fraction& other) const {
-    return (*this > other) || (*this == other);
+bool operator>=(const Fraction& f1, const Fraction& f2) {
+    return (f1 > f2) || (f1 == f2);
 }
-
 Fraction Fraction::toFraction(double x) {
     Fraction result;
     result.whole = static_cast<long>(x);
@@ -108,10 +103,58 @@ Fraction Fraction::toFraction(double x) {
     return result;
 }
 
-Fraction Subtract(const Fraction& f1, const Fraction& f2) {
+Fraction operator+(const Fraction& f1, const Fraction& f2) {
+    double val1 = static_cast<double>(f1);
+    double val2 = static_cast<double>(f2);
+    double result = val1 + val2;
+
+    Fraction resultFraction;
+    long whole_part = static_cast<long>(result);
+    double fractional_part = std::abs(result - whole_part);
+
+    resultFraction.whole = whole_part;
+    resultFraction.fractional = static_cast<unsigned short>(fractional_part * 100000 + 0.5);
+
+    return resultFraction;
+}
+
+Fraction operator-(const Fraction& f1, const Fraction& f2) {
     double val1 = static_cast<double>(f1);
     double val2 = static_cast<double>(f2);
     double result = val1 - val2;
+
+    Fraction resultFraction;
+    long whole_part = static_cast<long>(result);
+    double fractional_part = std::abs(result - whole_part);
+
+    resultFraction.whole = whole_part;
+    resultFraction.fractional = static_cast<unsigned short>(fractional_part * 100000 + 0.5);
+
+    return resultFraction;
+}
+
+Fraction operator*(const Fraction& f1, const Fraction& f2) {
+    double val1 = static_cast<double>(f1);
+    double val2 = static_cast<double>(f2);
+    double result = val1 * val2;
+
+    Fraction resultFraction;
+    long whole_part = static_cast<long>(result);
+    double fractional_part = std::abs(result - whole_part);
+
+    resultFraction.whole = whole_part;
+    resultFraction.fractional = static_cast<unsigned short>(fractional_part * 100000 + 0.5);
+
+    return resultFraction;
+}
+
+Fraction operator/(const Fraction& f1, const Fraction& f2) {
+    double val1 = static_cast<double>(f1);
+    double val2 = static_cast<double>(f2);
+    if (val2 == 0) {
+        throw std::invalid_argument("Division by zero");
+    }
+    double result = val1 / val2;
 
     Fraction resultFraction;
     long whole_part = static_cast<long>(result);

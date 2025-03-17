@@ -60,7 +60,8 @@ unsigned long long Combination::combination() const {
     return result;
 }
 
-Combination::operator string() const {
+
+Combination::operator std::string() const {
     stringstream ss;
     ss << "k = " << first << ", n = " << second << ", C(n,k) = " << combination();
     return ss.str();
@@ -74,30 +75,32 @@ Combination& Combination::operator=(const Combination& c) {
     return *this;
 }
 
-Combination& Combination::operator++() {
-    first++;
-    return *this;
+// Дружні оператори
+
+Combination& operator++(Combination& c) {
+    c.first++;
+    return c;
 }
 
-Combination Combination::operator++(int) {
-    Combination temp(*this);
-    second++;
+Combination operator++(Combination& c, int) {
+    Combination temp(c);
+    c.second++;
     return temp;
 }
 
-Combination& Combination::operator--() {
-    first--;
-    return *this;
+Combination& operator--(Combination& c) {
+    c.first--;
+    return c;
 }
 
-Combination Combination::operator--(int) {
-    Combination temp(*this);
-    second--;
+Combination operator--(Combination& c, int) {
+    Combination temp(c);
+    c.second--;
     return temp;
 }
 
-ostream& operator<<(ostream& out, const Combination& c) {
-    out << string(c);
+std::ostream& operator<<(std::ostream& out, const Combination& c) {
+    out << string(c); 
     return out;
 }
 
@@ -107,12 +110,12 @@ istream& operator>>(istream& in, Combination& c) {
     cout << " n = "; in >> n;
 
     if (k > 0 && n > 0 && k < n) {
-        c.SetSecond(n); 
-        c.SetFirst(k);  
+        c.SetSecond(n);
+        c.SetFirst(k);
     }
     else {
         cout << "Error: Invalid values. Please ensure k < n and both are positive." << endl;
-        c.SetFirst(0); 
+        c.SetFirst(0);
         c.SetSecond(0);
     }
 

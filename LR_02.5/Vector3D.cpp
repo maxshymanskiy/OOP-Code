@@ -1,9 +1,7 @@
 #include "Vector3D.h"
 
 Vector3D::Vector3D() : triad() {}
-
 Vector3D::Vector3D(const Triad& triad) : triad(triad) {}
-
 Vector3D::Vector3D(const Vector3D& other) : triad(other.triad) {}
 
 Triad Vector3D::getTriad() const { return triad; }
@@ -30,38 +28,34 @@ Vector3D::operator std::string() const {
     return static_cast<std::string>(triad);
 }
 
-Vector3D Vector3D::operator+(const Vector3D& other) const {
-    return Vector3D(Triad(
-        triad.getX() + other.triad.getX(),
-        triad.getY() + other.triad.getY(),
-        triad.getZ() + other.triad.getZ()
-    ));
+Vector3D operator+(const Vector3D& v1, const Vector3D& v2) {
+    return Vector3D(v1.triad + v2.triad);
 }
 
-int Vector3D::operator*(const Vector3D& other) const {
-    return triad.getX() * other.triad.getX() +
-        triad.getY() * other.triad.getY() +
-        triad.getZ() * other.triad.getZ();
-}
-    
-Vector3D& Vector3D::operator++() {
-    ++triad;
-    return *this;
+int operator*(const Vector3D& v1, const Vector3D& v2) {
+    return v1.triad.getX() * v2.triad.getX() +
+        v1.triad.getY() * v2.triad.getY() +
+        v1.triad.getZ() * v2.triad.getZ();
 }
 
-Vector3D Vector3D::operator++(int) {
-    Vector3D temp(*this);
-    ++triad;
+Vector3D& operator++(Vector3D& v) {
+    ++v.triad;
+    return v;
+}
+
+Vector3D operator++(Vector3D& v, int) {
+    Vector3D temp(v);
+    ++v.triad;
     return temp;
 }
 
-Vector3D& Vector3D::operator--() {
-    --triad;
-    return *this;
+Vector3D& operator--(Vector3D& v) {
+    --v.triad;
+    return v;
 }
 
-Vector3D Vector3D::operator--(int) {
-    Vector3D temp(*this);
-    --triad;
+Vector3D operator--(Vector3D& v, int) {
+    Vector3D temp(v);
+    --v.triad;
     return temp;
 }

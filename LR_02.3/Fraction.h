@@ -18,16 +18,16 @@ public:
     bool setFractional(unsigned short value);
 
     operator double() const { return whole + fractional / 100000.0; }
-    operator std::string() const; // перетворення у літерний рядок
+    operator std::string() const; 
 
     Fraction& operator=(const Fraction& other);
 
-    bool operator==(const Fraction& other) const;
-    bool operator!=(const Fraction& other) const;
-    bool operator<(const Fraction& other) const;
-    bool operator>(const Fraction& other) const;
-    bool operator<=(const Fraction& other) const;
-    bool operator>=(const Fraction& other) const;
+    friend bool operator==(const Fraction& f1, const Fraction& f2);
+    friend bool operator!=(const Fraction& f1, const Fraction& f2);
+    friend bool operator<(const Fraction& f1, const Fraction& f2);
+    friend bool operator>(const Fraction& f1, const Fraction& f2);
+    friend bool operator<=(const Fraction& f1, const Fraction& f2);
+    friend bool operator>=(const Fraction& f1, const Fraction& f2);
 
     Fraction& operator++(); // префіксний інкремент
     Fraction operator++(int); // постфіксний інкремент
@@ -36,7 +36,11 @@ public:
 
     static Fraction toFraction(double x);
 
-    friend Fraction Subtract(const Fraction& f1, const Fraction& f2);
+    friend Fraction operator+(const Fraction& f1, const Fraction& f2);
+    friend Fraction operator-(const Fraction& f1, const Fraction& f2);
+    friend Fraction operator*(const Fraction& f1, const Fraction& f2);
+    friend Fraction operator/(const Fraction& f1, const Fraction& f2);
+
     friend std::ostream& operator<<(std::ostream& out, const Fraction& fraction);
     friend std::istream& operator>>(std::istream& in, Fraction& fraction);
 };
