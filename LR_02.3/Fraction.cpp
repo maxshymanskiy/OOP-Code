@@ -20,15 +20,15 @@ Fraction::Fraction(const Fraction& other) {
 }
 
 bool Fraction::setWhole(long value) {
-    if (value < 0) {
-        cout << "Error: Whole part cannot be negative.\n";
-        return false;
-    }
     whole = value;
     return true;
 }
 
 bool Fraction::setFractional(unsigned short value) {
+    if (value < 0) {
+        cout << "Error: Whole part cannot be negative.\n";
+        return false;
+    }
     fractional = value;
     return true;
 }

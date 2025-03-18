@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cstring>
+#include <stdexcept>
 
 class IntegerSet {
 private:
@@ -12,14 +13,17 @@ private:
     void resize(size_t newCapacity);
 
 public:
-    const int* getElements() const { return elements; }
-    size_t getSize() const { return size; }
+    const int* getElements() const;
+    size_t getSize() const;
+    size_t getCapacity() const;
+
     void addElement(int elem);
     void removeElement(int elem);
 
     IntegerSet();
     IntegerSet(const int* arr, size_t n);
     IntegerSet(const IntegerSet& other);
+
     ~IntegerSet();
 
     IntegerSet& operator=(const IntegerSet& other);
@@ -36,4 +40,3 @@ public:
 
     operator std::string() const;
 };
-

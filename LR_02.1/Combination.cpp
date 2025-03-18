@@ -10,15 +10,8 @@ Combination::Combination() {
 }
 
 Combination::Combination(int k, int n) {
-    if (k > 0 && n > 0 && k < n) {
-        first = k;
-        second = n;
-    }
-    else {
-        first = 0;
-        second = 0;
-        cout << "Error: Invalid values for Combination constructor (k must be < n and positive)" << endl;
-    }
+    SetFirst(k);
+    SetSecond(n);
 }
 
 Combination::Combination(const Combination& c) {

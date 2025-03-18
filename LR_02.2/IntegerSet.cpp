@@ -2,7 +2,7 @@
 #include <sstream>
 #include <algorithm>
 
-// Допоміжна функція: перевірка наявності елемента
+// Перевірка наявності елемента
 bool IntegerSet::contains(int elem) const {
     for (size_t i = 0; i < size; ++i) {
         if (elements[i] == elem) return true;
@@ -17,6 +17,19 @@ void IntegerSet::resize(size_t newCapacity) {
     delete[] elements;
     elements = newElements;
     capacity = newCapacity;
+}
+
+// Геттери
+const int* IntegerSet::getElements() const {
+    return elements;
+}
+
+size_t IntegerSet::getSize() const {
+    return size;
+}
+
+size_t IntegerSet::getCapacity() const {
+    return capacity;
 }
 
 void IntegerSet::addElement(int elem) {
@@ -38,7 +51,6 @@ void IntegerSet::removeElement(int elem) {
     }
 }
 
-
 IntegerSet::IntegerSet() : elements(nullptr), size(0), capacity(0) {}
 
 IntegerSet::IntegerSet(const int* arr, size_t n) : elements(nullptr), size(0), capacity(n) {
@@ -52,7 +64,6 @@ IntegerSet::IntegerSet(const int* arr, size_t n) : elements(nullptr), size(0), c
     }
 }
 
-// Конструктор копіювання
 IntegerSet::IntegerSet(const IntegerSet& other) : elements(nullptr), size(other.size), capacity(other.capacity) {
     if (capacity > 0) {
         elements = new int[capacity];
@@ -60,7 +71,6 @@ IntegerSet::IntegerSet(const IntegerSet& other) : elements(nullptr), size(other.
     }
 }
 
-// Деструктор
 IntegerSet::~IntegerSet() {
     delete[] elements;
 }
@@ -119,8 +129,6 @@ std::istream& operator>>(std::istream& is, IntegerSet& set) {
     }
     return is;
 }
-
-
 
 IntegerSet::operator std::string() const {
     std::ostringstream oss;

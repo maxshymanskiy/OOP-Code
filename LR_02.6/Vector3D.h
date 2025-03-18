@@ -6,13 +6,17 @@
 class Vector3D {
 public:
     class Triad {
-    private:
-        int x, y, z;
-
     public:
-        Triad(); // Конструктор за замовчуванням
-        Triad(int x, int y, int z); // Конструктор ініціалізації
-        Triad(const Triad& other); // Конструктор копіювання
+        Triad();
+        Triad(int x, int y, int z);
+        Triad(const Triad& other);
+        ~Triad();
+
+        int getX() const { return x; }
+        int getY() const { return y; }
+        int getZ() const { return z; }
+
+        static int getTriadCount() { return triadCounter; }
 
         friend Triad operator+(const Triad& t1, const Triad& t2);
         friend Triad operator*(const Triad& t, int scalar);
@@ -24,21 +28,17 @@ public:
         friend std::istream& operator>>(std::istream& in, Triad& t);
         friend std::ostream& operator<<(std::ostream& out, const Triad& t);
 
-		int getX() const { return x; }
-		int getY() const { return y; }
-		int getZ() const { return z; }
+    private:
+        int x, y, z;
+        static int triadCounter;
     };
 
-private:
-    Triad triad;
+    Vector3D();
+    Vector3D(const Triad& t);
+    Vector3D(const Vector3D& other);
+    ~Vector3D();
 
-public:
-    Vector3D(); // Конструктор за замовчуванням
-    Vector3D(const Triad& t); // Конструктор ініціалізації
-    Vector3D(const Vector3D& other); // Конструктор копіювання
-
-    Triad getTriad() const { return triad; }
-    void setTriad(const Triad& t) { triad = t; }
+    static int getVector3DCount() { return vector3DCounter; }
 
     friend Vector3D operator+(const Vector3D& v1, const Vector3D& v2);
     friend int operator*(const Vector3D& v1, const Vector3D& v2);
@@ -49,5 +49,7 @@ public:
     friend std::istream& operator>>(std::istream& in, Vector3D& v);
     friend std::ostream& operator<<(std::ostream& out, const Vector3D& v);
 
-	
+private:
+    Triad triad;
+    static int vector3DCounter;
 };

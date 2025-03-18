@@ -19,16 +19,19 @@ int main() {
     int scalarProduct = v1 * v2;
     std::cout << "Scalar product: " << scalarProduct << "\n";
 
-    std::cout << "\nTesting increment/decrement:\n";
-    std::cout << "Original v1: " << v1 << "\n";
-    std::cout << "Prefix ++v1: " << ++v1 << "\n";
-    std::cout << "Postfix v1++: " << v1++ << "\n";
-    std::cout << "After postfix: " << v1 << "\n";
+    //std::cout << "\nTesting increment/decrement:\n";
+    //std::cout << "Original v1: " << v1 << "\n";
+    //std::cout << "Prefix ++v1: " << ++v1 << "\n";
+    //std::cout << "Postfix v1++: " << v1++ << "\n";
+    //std::cout << "After postfix: " << v1 << "\n";
 
-    std::cout << "Original v2: " << v2 << "\n";
-    std::cout << "Prefix --v2: " << --v2 << "\n";
-    std::cout << "Postfix v2--: " << v2-- << "\n";
-    std::cout << "After postfix: " << v2 << "\n";
+    //std::cout << "Original v2: " << v2 << "\n";
+    //std::cout << "Prefix --v2: " << --v2 << "\n";
+    //std::cout << "Postfix v2--: " << v2-- << "\n";
+    //std::cout << "After postfix: " << v2 << "\n";
 
+
+    std::cout << "Triad objects count: " << Vector3D::Triad::getTriadCount() << std::endl;
+    std::cout << "Vector3D objects count: " << Vector3D::getVector3DCount() << std::endl;
     return 0;
 }
