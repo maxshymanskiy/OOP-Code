@@ -7,9 +7,9 @@ private:
     long whole;
     unsigned short fractional;
 public:
-    BaseFraction(); // Constructor without parameters
-    BaseFraction(long wholePart, unsigned short fractionalPart); // Parameterized constructor
-    BaseFraction(const BaseFraction& other); // Copy constructor
+    BaseFraction(); 
+    BaseFraction(long wholePart, unsigned short fractionalPart); 
+    BaseFraction(const BaseFraction& other); 
 
     long getWhole() const { return whole; }
     unsigned short getFractional() const { return fractional; }
@@ -19,10 +19,8 @@ public:
     operator std::string() const;
     BaseFraction& operator=(const BaseFraction& other);
 
-    // Friend I/O functions
     friend std::ostream& operator<<(std::ostream& out, const BaseFraction& fraction);
     friend std::istream& operator>>(std::istream& in, BaseFraction& fraction);
 };
 
-// Helper function
 BaseFraction makeBaseFraction(long wholePart, unsigned short fractionalPart);

@@ -5,9 +5,9 @@
 
 class Fraction : public Pair {
 public:
-    Fraction(); 
-    Fraction(long wholePart, unsigned short fractionalPart); 
-    Fraction(const Fraction& other); 
+    Fraction();
+    Fraction(long wholePart, unsigned short fractionalPart);
+    Fraction(const Fraction& other);
 
     long getWhole() const { return first; }
     unsigned short getFractional() const { return static_cast<unsigned short>(second); }

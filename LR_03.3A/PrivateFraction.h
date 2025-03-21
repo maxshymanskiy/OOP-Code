@@ -28,10 +28,7 @@ public:
     PrivateFraction& operator--(); // Prefix decrement
     PrivateFraction operator--(int); // Postfix decrement
 
-    friend PrivateFraction operator+(const PrivateFraction& f1, const PrivateFraction& f2);
     friend PrivateFraction operator-(const PrivateFraction& f1, const PrivateFraction& f2);
-    friend PrivateFraction operator*(const PrivateFraction& f1, const PrivateFraction& f2);
-    friend PrivateFraction operator/(const PrivateFraction& f1, const PrivateFraction& f2);
 
     friend std::ostream& operator<<(std::ostream& out, const PrivateFraction& fraction);
     friend std::istream& operator>>(std::istream& in, PrivateFraction& fraction);

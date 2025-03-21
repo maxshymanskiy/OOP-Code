@@ -20,11 +20,7 @@ public:
     PublicFraction& operator--(); // Prefix decrement
     PublicFraction operator--(int); // Postfix decrement
 
-    friend PublicFraction operator+(const PublicFraction& f1, const PublicFraction& f2);
     friend PublicFraction operator-(const PublicFraction& f1, const PublicFraction& f2);
-    friend PublicFraction operator*(const PublicFraction& f1, const PublicFraction& f2);
-    friend PublicFraction operator/(const PublicFraction& f1, const PublicFraction& f2);
-
     static PublicFraction toFraction(double x);
 };
 

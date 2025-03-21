@@ -67,20 +67,6 @@ PrivateFraction PrivateFraction::toFraction(double x) {
     return result;
 }
 
-PrivateFraction operator+(const PrivateFraction& f1, const PrivateFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    double result = val1 + val2;
-
-    PrivateFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
 
 PrivateFraction operator-(const PrivateFraction& f1, const PrivateFraction& f2) {
     double val1 = static_cast<double>(f1);
@@ -97,38 +83,6 @@ PrivateFraction operator-(const PrivateFraction& f1, const PrivateFraction& f2) 
     return resultFraction;
 }
 
-PrivateFraction operator*(const PrivateFraction& f1, const PrivateFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    double result = val1 * val2;
-
-    PrivateFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
-
-PrivateFraction operator/(const PrivateFraction& f1, const PrivateFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    if (val2 == 0) {
-        throw std::invalid_argument("Ділення на нуль");
-    }
-    double result = val1 / val2;
-
-    PrivateFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
 
 ostream& operator<<(ostream& out, const PrivateFraction& fraction) {
     out << static_cast<string>(fraction);

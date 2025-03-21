@@ -60,20 +60,6 @@ PublicFraction PublicFraction::toFraction(double x) {
     return result;
 }
 
-PublicFraction operator+(const PublicFraction& f1, const PublicFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    double result = val1 + val2;
-
-    PublicFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
 
 PublicFraction operator-(const PublicFraction& f1, const PublicFraction& f2) {
     double val1 = static_cast<double>(f1);
@@ -90,38 +76,6 @@ PublicFraction operator-(const PublicFraction& f1, const PublicFraction& f2) {
     return resultFraction;
 }
 
-PublicFraction operator*(const PublicFraction& f1, const PublicFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    double result = val1 * val2;
-
-    PublicFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
-
-PublicFraction operator/(const PublicFraction& f1, const PublicFraction& f2) {
-    double val1 = static_cast<double>(f1);
-    double val2 = static_cast<double>(f2);
-    if (val2 == 0) {
-        throw std::invalid_argument("Division by zero");
-    }
-    double result = val1 / val2;
-
-    PublicFraction resultFraction;
-    long whole_part = static_cast<long>(result);
-    double fractional_part = std::abs(result - whole_part);
-
-    resultFraction.setWhole(whole_part);
-    resultFraction.setFractional(static_cast<unsigned short>(fractional_part * 100000 + 0.5));
-
-    return resultFraction;
-}
 
 PublicFraction makePublicFraction(long wholePart, unsigned short fractionalPart) {
     return PublicFraction(wholePart, fractionalPart);

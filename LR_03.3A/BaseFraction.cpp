@@ -58,7 +58,7 @@ istream& operator>>(istream& in, BaseFraction& fraction) {
     cout << "¬вед≥ть ц≥лу частину: ";
     in >> wholePart;
 
-    cout << "¬вед≥ть дробову частину: ";
+    cout << "¬вед≥ть дробову частину (5 чисел): ";
     in >> tempFractional;
 
     fraction.setWhole(wholePart);

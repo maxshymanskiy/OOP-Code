@@ -10,7 +10,7 @@ int main() {
     SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
 
-    cout << "===== Тестування класу BaseFraction =====" << endl;
+    /*cout << "===== Тестування класу BaseFraction =====" << endl;
     BaseFraction bf1;
     BaseFraction bf2(123, 45678);
     cout << "bf1 (без параметрів): " << bf1 << endl;
@@ -26,9 +26,9 @@ int main() {
     PublicFraction pf1;
     PublicFraction pf2(123, 45678);
     cout << "pf1 (без параметрів): " << pf1 << endl;
-    cout << "pf2 (з параметрами): " << pf2 << endl;
+    cout << "pf2 (з параметрами): " << pf2 << endl;*/
 
-    cout << "\nВведіть перший дріб:" << endl;
+    cout << "Введіть перший дріб:" << endl;
     PublicFraction a;
     cin >> a;
     cout << "Введіть другий дріб:" << endl;
@@ -62,7 +62,7 @@ int main() {
     cout << "temp = a--: " << endl;
     cout << "a = " << a << ", temp = " << temp << endl;
 
-    cout << "\n===== Тестування класу PrivateFraction =====" << endl;
+    /*cout << "\n===== Тестування класу PrivateFraction =====" << endl;
     PrivateFraction pvf1;
     PrivateFraction pvf2(123, 45678);
     cout << "pvf1 (без параметрів): " << pvf1 << endl;
@@ -81,26 +81,26 @@ int main() {
     cout << "pa == pb: " << (pa == pb ? "істина" : "хибність") << endl;
     cout << "pa != pb: " << (pa != pb ? "істина" : "хибність") << endl;
     cout << "pa < pb: " << (pa < pb ? "істина" : "хибність") << endl;
-    cout << "pa > pb: " << (pa > pb ? "істина" : "хибність") << endl;
+    cout << "pa > pb: " << (pa > pb ? "істина" : "хибність") << endl;*/
 
-    PrivateFraction pc = pa - pb;
-    cout << "Віднімання(pa, pb): " << pc << endl;
+    //PrivateFraction pc = pa - pb;
+    //cout << "Віднімання(pa, pb): " << pc << endl;
 
-    cout << "\nТестування інкременту і декременту:" << endl;
-    cout << "pa початкове: " << pa << endl;
-    PrivateFraction ptemp;
-    ptemp = ++pa;
-    cout << "ptemp = ++pa: " << endl;
-    cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
-    ptemp = --pa;
-    cout << "ptemp = --pa: " << endl;
-    cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
-    ptemp = pa++;
-    cout << "ptemp = pa++: " << endl;
-    cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
-    ptemp = pa--;
-    cout << "ptemp = pa--: " << endl;
-    cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
+    //cout << "\nТестування інкременту і декременту:" << endl;
+    //cout << "pa початкове: " << pa << endl;
+    //PrivateFraction ptemp;
+    //ptemp = ++pa;
+    //cout << "ptemp = ++pa: " << endl;
+    //cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
+    //ptemp = --pa;
+    //cout << "ptemp = --pa: " << endl;
+    //cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
+    //ptemp = pa++;
+    //cout << "ptemp = pa++: " << endl;
+    //cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
+    //ptemp = pa--;
+    //cout << "ptemp = pa--: " << endl;
+    //cout << "pa = " << pa << ", ptemp = " << ptemp << endl;
 
     return 0;
 }
