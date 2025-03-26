@@ -6,14 +6,14 @@ public:
     Vector3D(int x = 0, int y = 0, int z = 0);
     Vector3D(const Triad& triad);
 
-    Vector3D operator+(const Vector3D& other) const;
-    int operator*(const Vector3D& other) const; // Скалярний добуток
+    friend Vector3D operator+(const Vector3D& lhs, const Vector3D& rhs);
+    friend int operator*(const Vector3D& lhs, const Vector3D& rhs);
 
-	operator std::string() const;
+    Vector3D& operator=(const Vector3D& other);
 
-	friend std::istream& operator>>(std::istream& in, Vector3D& vec);
-	friend std::ostream& operator<<(std::ostream& out, const Vector3D& vec);
+    std::string to_string() const;
+    operator std::string() const;
+
+    friend std::istream& operator>>(std::istream& in, Vector3D& vec);
+    friend std::ostream& operator<<(std::ostream& out, const Vector3D& vec);
 };
-
-// Функція для демонстрації принципу підстановки
-//Triad createAndModifyTriad(const Triad& triad);

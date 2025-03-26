@@ -15,6 +15,8 @@ public:
     friend bool operator<=(const PublicFraction& f1, const PublicFraction& f2);
     friend bool operator>=(const PublicFraction& f1, const PublicFraction& f2);
 
+    PublicFraction& operator=(const PublicFraction& other);
+
     PublicFraction& operator++(); // Prefix increment
     PublicFraction operator++(int); // Postfix increment
     PublicFraction& operator--(); // Prefix decrement

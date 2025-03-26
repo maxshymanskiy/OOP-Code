@@ -1,14 +1,17 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 class Pair {
 protected:
     long first;
     long second;
 public:
-    Pair(); // Default constructor
-    Pair(long firstValue, long secondValue); // Parametrized constructor 
-    Pair(const Pair& other); // Copy constructor
+    Pair();
+    Pair(long firstValue, long secondValue);
+    Pair(const Pair& other);
 
     long getFirst() const { return first; }
     long getSecond() const { return second; }
@@ -17,6 +20,7 @@ public:
     bool setSecond(long value);
 
     Pair& operator=(const Pair& other);
+    operator std::string() const;
 
     friend bool operator==(const Pair& p1, const Pair& p2);
     friend bool operator!=(const Pair& p1, const Pair& p2);

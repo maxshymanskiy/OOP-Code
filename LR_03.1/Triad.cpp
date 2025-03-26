@@ -11,12 +11,20 @@ void Triad::setX(int x) { this->x = x; }
 void Triad::setY(int y) { this->y = y; }
 void Triad::setZ(int z) { this->z = z; }
 
-Triad Triad::operator+(int num) const {
-    return Triad(x + num, y + num, z + num);
+Triad operator+(const Triad& triad, int num) {
+    return Triad(triad.x + num, triad.y + num, triad.z + num);
 }
 
-Triad Triad::operator*(int num) const {
-    return Triad(x * num, y * num, z * num);
+Triad operator+(int num, const Triad& triad) {
+    return triad + num;
+}
+
+Triad operator*(const Triad& triad, int num) {
+    return Triad(triad.x * num, triad.y * num, triad.z * num);
+}
+
+Triad operator*(int num, const Triad& triad) {
+    return triad * num;
 }
 
 bool Triad::operator==(const Triad& other) const {
@@ -45,10 +53,23 @@ Triad Triad::operator--(int) {
     return temp;
 }
 
-Triad::operator std::string() const {
+Triad& Triad::operator=(const Triad& other) {
+    if (this != &other) {
+        x = other.x;
+        y = other.y;
+        z = other.z;
+    }
+    return *this;
+}
+
+std::string Triad::to_string() const {
     std::stringstream ss;
     ss << "(" << x << ", " << y << ", " << z << ")";
     return ss.str();
+}
+
+Triad::operator std::string() const {
+    return to_string();
 }
 
 std::istream& operator>>(std::istream& in, Triad& triad) {

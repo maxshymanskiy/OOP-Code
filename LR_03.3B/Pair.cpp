@@ -26,6 +26,12 @@ Pair& Pair::operator=(const Pair& other) {
     return *this;
 }
 
+Pair::operator std::string() const {
+    std::stringstream ss;
+    ss << first << "." << std::setw(5) << std::setfill('0') << second;
+    return ss.str();
+}
+
 bool operator==(const Pair& p1, const Pair& p2) {
     return (p1.first == p2.first) && (p1.second == p2.second);
 }
@@ -52,7 +58,7 @@ bool operator>=(const Pair& p1, const Pair& p2) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Pair& pair) {
-    out << "(" << pair.first << ", " << pair.second << ")";
+    out << static_cast<std::string>(pair);
     return out;
 }
 

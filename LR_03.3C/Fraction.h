@@ -19,6 +19,7 @@ public:
     bool setFractional(unsigned short value);
     operator double() const { return whole + fractional / 100000.0; }
     operator std::string() const;
+
     Fraction& operator=(const Fraction& other);
 
     friend bool operator==(const Fraction& f1, const Fraction& f2);
@@ -28,10 +29,10 @@ public:
     friend bool operator<=(const Fraction& f1, const Fraction& f2);
     friend bool operator>=(const Fraction& f1, const Fraction& f2);
 
-    Fraction& operator++(); // Prefix increment
-    Fraction operator++(int); // Postfix increment
-    Fraction& operator--(); // Prefix decrement
-    Fraction operator--(int); // Postfix decrement
+    Fraction& operator++(); 
+    Fraction operator++(int); 
+    Fraction& operator--(); 
+    Fraction operator--(int); 
 
     static Fraction toFraction(double x);
 

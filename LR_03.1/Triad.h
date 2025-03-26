@@ -18,8 +18,11 @@ public:
     void setY(int y);
     void setZ(int z);
 
-    Triad operator+(int num) const;
-    Triad operator*(int num) const;
+    friend Triad operator+(const Triad& triad, int num);
+    friend Triad operator+(int num, const Triad& triad);
+    friend Triad operator*(const Triad& triad, int num);
+    friend Triad operator*(int num, const Triad& triad);
+
     bool operator==(const Triad& other) const;
 
     Triad& operator++();
@@ -27,6 +30,9 @@ public:
     Triad& operator--();
     Triad operator--(int);
 
+    Triad& operator=(const Triad& other);
+
+    std::string to_string() const;
     operator std::string() const;
 
     friend std::istream& operator>>(std::istream& in, Triad& triad);

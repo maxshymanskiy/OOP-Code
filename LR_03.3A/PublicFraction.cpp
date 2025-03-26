@@ -4,6 +4,13 @@
 
 using namespace std;
 
+PublicFraction& PublicFraction::operator=(const PublicFraction& other) {
+    if (this != &other) {
+        BaseFraction::operator=(other);
+    }
+    return *this;
+}
+
 bool operator==(const PublicFraction& f1, const PublicFraction& f2) {
     return (f1.getWhole() == f2.getWhole()) && (f1.getFractional() == f2.getFractional());
 }
