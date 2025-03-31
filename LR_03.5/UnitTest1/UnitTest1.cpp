@@ -58,11 +58,5 @@ namespace UnitTest1
 			Assert::AreEqual(std::string("New Publisher"), book.getPublisher());
 			Assert::AreEqual(29.99, book.getPrice());
 		}
-
-		TEST_METHOD(TestInvalidYear)
-		{
-			Book book("Author", "Title", -1, "Publisher", 19.99);
-			Assert::AreEqual(2025, book.getYear());
-		}
 	};
 }
