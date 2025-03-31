@@ -1,47 +1,51 @@
 ﻿#include "subscriber.h"
 
-// Default constructor
-Subscriber::Subscriber() : Array(), name(""), libraryId(0) {}
+Subscriber::Subscriber() {
+    setName("Невідомо");
+    setLibraryId(0); // 0 - спеціальне значення для "не встановлено"
+}
 
-// Initialization constructor
-Subscriber::Subscriber(const std::string& n, int id) : Array(), name(n) {
-    if (id <= 0) {
-        std::cout << "Error: Invalid library ID. Setting to 0." << std::endl;
-        libraryId = 0;
+Subscriber::Subscriber(const std::string& n, int id) {
+    if (!setName(n)) {
+        std::cerr << "Попередження: Неприпустиме ім'я у конструкторі. Використовується значення за замовчуванням.\n";
+        setName("Невідомо");
     }
-    else {
-        libraryId = id;
+
+    if (!setLibraryId(id)) {
+        std::cerr << "Попередження: Неприпустимий бібліотечний ID. Використовується 0.\n";
+        libraryId = 0;
     }
 }
 
-// Copy constructor
 Subscriber::Subscriber(const Subscriber& other)
     : Array(other), name(other.name), libraryId(other.libraryId),
     borrowedBooks(other.borrowedBooks) {
 }
 
-// Getters
-std::string Subscriber::getName() const { return name; }
-int Subscriber::getLibraryId() const { return libraryId; }
-std::vector<BookRecord> Subscriber::getBorrowedBooks() const { return borrowedBooks; }
 
-// Setters
-void Subscriber::setName(const std::string& n) { name = n; }
-
-void Subscriber::setLibraryId(int id) {
-    if (id <= 0) {
-        std::cout << "Error: Invalid library ID." << std::endl;
-        return;
+bool Subscriber::setName(const std::string& n) {
+    if (n.empty()) {
+        std::cerr << "Помилка: Ім'я не може бути порожнім\n";
+        return false;
     }
-    libraryId = id;
+    name = n;
+    return true;
 }
 
-// Add a book to the borrowed list
+bool Subscriber::setLibraryId(int id) {
+    if (id <= 0) {
+        std::cerr << "Помилка: Бібліотечний ID має бути додатнім числом\n";
+        return false;
+    }
+    libraryId = id;
+    return true;
+}
+
+
 void Subscriber::addBook(const BookRecord& record) {
     borrowedBooks.push_back(record);
 }
 
-// Remove a book from the borrowed list
 bool Subscriber::removeBook(const Book& book) {
     for (auto it = borrowedBooks.begin(); it != borrowedBooks.end(); ++it) {
         if (it->getBook() == book) {
@@ -52,7 +56,6 @@ bool Subscriber::removeBook(const Book& book) {
     return false;
 }
 
-// Mark a book as returned
 bool Subscriber::returnBook(const Book& book) {
     for (auto& record : borrowedBooks) {
         if (record.getBook() == book && !record.isReturned()) {
@@ -63,7 +66,6 @@ bool Subscriber::returnBook(const Book& book) {
     return false;
 }
 
-// Find books due for return
 std::vector<BookRecord> Subscriber::findDueBooks() const {
     std::vector<BookRecord> dueBooks;
     for (const auto& record : borrowedBooks) {
@@ -74,7 +76,6 @@ std::vector<BookRecord> Subscriber::findDueBooks() const {
     return dueBooks;
 }
 
-// Search books by author
 std::vector<BookRecord> Subscriber::findBooksByAuthor(const std::string& author) const {
     std::vector<BookRecord> result;
     for (const auto& record : borrowedBooks) {
@@ -85,7 +86,6 @@ std::vector<BookRecord> Subscriber::findBooksByAuthor(const std::string& author)
     return result;
 }
 
-// Search books by publisher
 std::vector<BookRecord> Subscriber::findBooksByPublisher(const std::string& publisher) const {
     std::vector<BookRecord> result;
     for (const auto& record : borrowedBooks) {
@@ -96,7 +96,6 @@ std::vector<BookRecord> Subscriber::findBooksByPublisher(const std::string& publ
     return result;
 }
 
-// Search books by year
 std::vector<BookRecord> Subscriber::findBooksByYear(int year) const {
     std::vector<BookRecord> result;
     for (const auto& record : borrowedBooks) {
@@ -107,7 +106,6 @@ std::vector<BookRecord> Subscriber::findBooksByYear(int year) const {
     return result;
 }
 
-// Calculate total cost of books to be returned
 double Subscriber::calculateTotalCostOfDueBooks() const {
     double total = 0.0;
     for (const auto& record : borrowedBooks) {
@@ -118,91 +116,70 @@ double Subscriber::calculateTotalCostOfDueBooks() const {
     return total;
 }
 
-// Generate Debt object
 Debt Subscriber::generateDebt() const {
     return Debt(findDueBooks());
 }
 
-// Union operation (merge two subscriber cards)
-Subscriber Subscriber::unionCards(const Subscriber& s1, const Subscriber& s2) {
-    Subscriber result(s1.name + " & " + s2.name, s1.libraryId);
+Subscriber Subscriber::operator+(const Subscriber& other) const {
+    Subscriber result(*this); 
+    result.name = this->name + " & " + other.name; 
 
-    // Copy all books from first subscriber
-    for (const auto& record : s1.borrowedBooks) {
-        result.addBook(record);
-    }
-
-    // Add books from second subscriber without duplicates
-    for (const auto& record : s2.borrowedBooks) {
+    // Додаємо книги з other, якщо вони ще не є в результаті
+    for (const auto& record : other.borrowedBooks) {
         bool isDuplicate = false;
-        for (const auto& existingRecord : result.borrowedBooks) {
-            if (existingRecord.getBook() == record.getBook()) {
+        for (const auto& existing : result.borrowedBooks) {
+            if (existing.getBook() == record.getBook()) {
                 isDuplicate = true;
                 break;
             }
         }
         if (!isDuplicate) {
-            result.addBook(record);
+            result.borrowedBooks.push_back(record);
         }
     }
-
     return result;
 }
 
-// Intersection operation
-Subscriber Subscriber::intersectionCards(const Subscriber& s1, const Subscriber& s2) {
-    Subscriber result(s1.name + " ∩ " + s2.name, s1.libraryId);
-
-    // Add only books that are in both subscribers
-    for (const auto& record1 : s1.borrowedBooks) {
-        for (const auto& record2 : s2.borrowedBooks) {
-            if (record1.getBook() == record2.getBook()) {
-                result.addBook(record1);
-                break;
-            }
-        }
-    }
-
-    return result;
-}
-
-// Difference operation
-Subscriber Subscriber::differenceCards(const Subscriber& s1, const Subscriber& s2) {
-    Subscriber result(s1.name + " - " + s2.name, s1.libraryId);
-
-    // Add books from first subscriber that are not in second subscriber
-    for (const auto& record1 : s1.borrowedBooks) {
-        bool found = false;
-        for (const auto& record2 : s2.borrowedBooks) {
-            if (record1.getBook() == record2.getBook()) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            result.addBook(record1);
-        }
-    }
-
-    return result;
-}
-
-// Union operator
-Subscriber Subscriber::operator+(const Subscriber& other) const {
-    return unionCards(*this, other);
-}
-
-// Intersection operator
+// Оператор перетину (*)
 Subscriber Subscriber::operator*(const Subscriber& other) const {
-    return intersectionCards(*this, other);
+    Subscriber result;
+    result.name = this->name + " ∩ " + other.name;
+
+    // Додаємо тільки спільні книги
+    for (const auto& record1 : this->borrowedBooks) {
+        for (const auto& record2 : other.borrowedBooks) {
+            if (record1.getBook() == record2.getBook()) {
+                result.borrowedBooks.push_back(record1);
+                break;
+            }
+        }
+    }
+    return result;
 }
 
-// Difference operator
+// Оператор різниці (-)
 Subscriber Subscriber::operator-(const Subscriber& other) const {
-    return differenceCards(*this, other);
+    Subscriber result(*this);
+    result.name = this->name + " - " + other.name;
+
+    // Видаляємо книги, які є в other
+    auto& books = result.borrowedBooks;
+    books.erase(
+        std::remove_if(books.begin(), books.end(),
+            [&other](const BookRecord& record) {
+                for (const auto& otherRecord : other.borrowedBooks) {
+                    if (record.getBook() == otherRecord.getBook()) {
+                        return true;
+                    }
+                }
+                return false;
+            }),
+        books.end()
+    );
+    return result;
 }
 
-// Assignment operator
+// Оператор присвоєння (=)
 Subscriber& Subscriber::operator=(const Subscriber& other) {
     if (this != &other) {
         Array::operator=(other);
@@ -213,7 +190,6 @@ Subscriber& Subscriber::operator=(const Subscriber& other) {
     return *this;
 }
 
-// String conversion
 std::string Subscriber::toString() const {
     std::string result = "Subscriber: " + name + "\n";
     result += "Library ID: " + std::to_string(libraryId) + "\n";
@@ -226,36 +202,34 @@ std::string Subscriber::toString() const {
     return result;
 }
 
-// Output operator
 std::ostream& operator<<(std::ostream& os, const Subscriber& subscriber) {
     os << subscriber.toString();
     return os;
 }
 
-// Input operator
 std::istream& operator>>(std::istream& is, Subscriber& subscriber) {
-    std::cout << "Enter subscriber name: ";
+    std::cout << "Введіть ім'я передплатника: ";
     is >> std::ws;
     std::getline(is, subscriber.name);
 
-    std::cout << "Enter library ID: ";
+    std::cout << "Введіть бібліотечний ID: ";
     is >> subscriber.libraryId;
     if (subscriber.libraryId <= 0) {
-        std::cout << "Error: Invalid library ID. Setting to 0." << std::endl;
+        std::cout << "Помилка: Неприпустимий бібліотечний ID. Встановлюється 0." << std::endl;
         subscriber.libraryId = 0;
     }
 
-    std::cout << "Enter number of borrowed books: ";
+    std::cout << "Введіть кількість позичених книг: ";
     int numBooks;
     is >> numBooks;
     if (numBooks < 0) {
-        std::cout << "Error: Invalid number of books. Setting to 0." << std::endl;
+        std::cout << "Помилка: Неприпустима кількість книг. Встановлюється 0." << std::endl;
         numBooks = 0;
     }
 
     subscriber.borrowedBooks.clear();
     for (int i = 0; i < numBooks; i++) {
-        std::cout << "Enter information for book " << i + 1 << ":" << std::endl;
+        std::cout << "Введіть інформацію про книгу " << i + 1 << ":" << std::endl;
         BookRecord record;
         is >> record;
         subscriber.borrowedBooks.push_back(record);

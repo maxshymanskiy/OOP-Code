@@ -3,21 +3,23 @@
 Book::Book() : author(""), title(""), year(0), publisher(""), price(0.0) {}
 
 Book::Book(const std::string& a, const std::string& t, int y, const std::string& p, double pr)
-    : author(a), title(t), publisher(p) {
-    if (y <= 0) {
-        std::cout << "Error: Invalid year. Setting to current year." << std::endl;
-        year = 2025;
+    : Book() {
+    if (!setAuthor(a)) {
+        std::cout << "Помилка: Некоректний автор. Встановлено порожній рядок.\n";
     }
-    else {
-        year = y;
+    if (!setTitle(t)) {
+        std::cout << "Помилка: Некоректна назва. Встановлено порожній рядок.\n";
     }
-
-    if (pr < 0) {
-        std::cout << "Error: Invalid price. Setting to 0." << std::endl;
-        price = 0.0;
+    if (!setYear(y)) {
+        year = 1900;  // Дефолтне значення для старих книг
+        std::cout << "Попередження: Некоректний рік видання. Встановлено 1900.\n";
     }
-    else {
-        price = pr;
+    if (!setPublisher(p)) {
+        std::cout << "Помилка: Некоректне видавництво. Встановлено порожній рядок.\n";
+    }
+    if (!setPrice(pr)) {
+        setPrice(0.0);
+        std::cout << "Помилка: Некоректна ціна. Встановлено 0.\n";
     }
 }
 
@@ -26,31 +28,40 @@ Book::Book(const Book& other)
     publisher(other.publisher), price(other.price) {
 }
 
-std::string Book::getAuthor() const { return author; }
-std::string Book::getTitle() const { return title; }
-int Book::getYear() const { return year; }
-std::string Book::getPublisher() const { return publisher; }
-double Book::getPrice() const { return price; }
-
-void Book::setAuthor(const std::string& a) { author = a; }
-void Book::setTitle(const std::string& t) { title = t; }
-
-void Book::setYear(int y) {
-    if (y <= 0) {
-        std::cout << "Error: Invalid year." << std::endl;
-        return;
-    }
-    year = y;
+bool Book::setAuthor(const std::string& a) {
+    if (a.empty()) return false;
+    author = a;
+    return true;
 }
 
-void Book::setPublisher(const std::string& p) { publisher = p; }
+bool Book::setTitle(const std::string& t) {
+    if (t.empty()) return false;
+    title = t;
+    return true;
+}
 
-void Book::setPrice(double p) {
-    if (p < 0) {
-        std::cout << "Error: Invalid price." << std::endl;
-        return;
+bool Book::setYear(int y) {
+    if (y == -1) {  // "NULL" для року
+        year = -1;
+        return true;
     }
+    if (y <= 0 || y > 2025) {
+        return false;
+    }
+    year = y;
+    return true;
+}
+
+bool Book::setPublisher(const std::string& p) {
+    if (p.empty()) return false;
+    publisher = p;
+    return true;
+}
+
+bool Book::setPrice(double p) {
+    if (p < 0) return false;
     price = p;
+    return true;
 }
 
 bool Book::operator==(const Book& other) const {
@@ -61,9 +72,9 @@ bool Book::operator==(const Book& other) const {
 }
 
 std::string Book::toString() const {
-    return "Book: \"" + title + "\" by " + author + ", " +
-        std::to_string(year) + ", " + publisher + ", Price: " +
-        std::to_string(price);
+    return "Книга: \"" + title + "\" авторства " + author + ", " +
+        std::to_string(year) + " рік, видавництво " + publisher +
+        ", Ціна: " + std::to_string(price);
 }
 
 std::ostream& operator<<(std::ostream& os, const Book& book) {
@@ -72,27 +83,37 @@ std::ostream& operator<<(std::ostream& os, const Book& book) {
 }
 
 std::istream& operator>>(std::istream& is, Book& book) {
-    std::cout << "Enter author: ";
-    std::getline(is >> std::ws, book.author);
+    std::string tmp_author;
+    std::cout << "Введіть автора: ";
+    std::getline(is >> std::ws, tmp_author);
+    book.setAuthor(tmp_author);
 
-    std::cout << "Enter title: ";
-    std::getline(is, book.title);
+    std::string tmp_title;
+    std::cout << "Введіть назву: ";
+    std::getline(is, tmp_title);
+    book.setTitle(tmp_title);
 
-    std::cout << "Enter year: ";
-    is >> book.year;
-    if (book.year <= 0) {
-        std::cout << "Error: Invalid year. Setting to current year." << std::endl;
-        book.year = 2025;
+    int tmp_year;
+    std::cout << "Введіть рік: ";
+    is >> tmp_year;
+    if (!book.setYear(tmp_year)) {
+        book.setYear(2025);
+        std::cout << "Помилка: Некоректний рік. Встановлено 2025.\n";
     }
 
-    std::cout << "Enter publisher: ";
-    std::getline(is >> std::ws, book.publisher);
+    is.ignore(); // Очистка буфера після введення числа
 
-    std::cout << "Enter price: ";
-    is >> book.price;
-    if (book.price < 0) {
-        std::cout << "Error: Invalid price. Setting to 0." << std::endl;
-        book.price = 0.0;
+    std::string tmp_pub;
+    std::cout << "Введіть видавництво: ";
+    std::getline(is >> std::ws, tmp_pub);
+    book.setPublisher(tmp_pub);
+
+    double tmp_price;
+    std::cout << "Введіть ціну: ";
+    is >> tmp_price;
+    if (!book.setPrice(tmp_price)) {
+        book.setPrice(0.0);
+        std::cout << "Помилка: Некоректна ціна. Встановлено 0.\n";
     }
 
     return is;

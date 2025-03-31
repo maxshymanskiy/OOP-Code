@@ -16,17 +16,17 @@ public:
     Book(const std::string& a, const std::string& t, int y, const std::string& p, double pr);
     Book(const Book& other);
 
-    std::string getAuthor() const;
-    std::string getTitle() const;
-    int getYear() const;
-    std::string getPublisher() const;
-    double getPrice() const;
+    std::string getAuthor() const { return author; }
+    std::string getTitle() const { return title; }
+    int getYear() const { return year; }
+    std::string getPublisher() const { return publisher; }
+    double getPrice() const { return price; }
 
-    void setAuthor(const std::string& a);
-    void setTitle(const std::string& t);
-    void setYear(int y);
-    void setPublisher(const std::string& p);
-    void setPrice(double p);
+    bool setAuthor(const std::string& a);
+    bool setTitle(const std::string& t);
+    bool setYear(int y);
+    bool setPublisher(const std::string& p);
+    bool setPrice(double p);
 
     bool operator==(const Book& other) const;
 

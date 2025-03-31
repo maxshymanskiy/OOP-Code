@@ -23,7 +23,9 @@ public:
     const int& operator[](int index) const;
 
     int getSize() const;
-    void setSize(int newSize);
+    bool setSize(int newSize);  
+
+    std::string toString() const;  
 
     friend std::ostream& operator<<(std::ostream& os, const Array& arr);
     friend std::istream& operator>>(std::istream& is, Array& arr);
