@@ -1,6 +1,7 @@
 #pragma once
 #include "bookrecord.h"
 #include <vector>
+#include <string>
 
 class Debt {
 private:
@@ -10,11 +11,8 @@ public:
     Debt();
     Debt(const std::vector<BookRecord>& records);
 
-	std::vector<BookRecord> getDueBooks() const { return dueBooksRecord; }
-	int getNumberOfDueBooks() const { return dueBooksRecord.size(); }
-
-	double calculateTotalDebt() const;
     void addBookRecord(const BookRecord& record);
+    double calculateTotalDebt() const;
 
     std::string toString() const;
 

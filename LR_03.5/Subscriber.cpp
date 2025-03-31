@@ -13,7 +13,7 @@ Subscriber::Subscriber(const std::string& n, int id) {
 
     if (!setLibraryId(id)) {
         std::cerr << "Попередження: Неприпустимий бібліотечний ID. Використовується 0.\n";
-        libraryId = 0;
+        setLibraryId(0);
     }
 }
 
@@ -55,6 +55,7 @@ bool Subscriber::removeBook(const Book& book) {
     }
     return false;
 }
+
 
 bool Subscriber::returnBook(const Book& book) {
     for (auto& record : borrowedBooks) {
