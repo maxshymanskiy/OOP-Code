@@ -39,6 +39,7 @@ public:
     Subscriber operator+(const Subscriber& other) const;  // Об'єднання
     Subscriber operator*(const Subscriber& other) const;  // Перетин
     Subscriber operator-(const Subscriber& other) const;  // Різниця
+
     Subscriber& operator=(const Subscriber& other);  // Присвоєння
 
     std::string toString() const;
