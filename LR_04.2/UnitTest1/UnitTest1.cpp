@@ -4,6 +4,9 @@
 #include "../Cube.cpp"
 #include "../Parallelepiped.h"
 #include "../Parallelepiped.cpp"
+#include "../Sphere.h"
+#include "../Sphere.cpp"
+
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -53,6 +56,34 @@ namespace UnitTest1
 
 			// Assert
 			Assert::AreEqual(expectedSurfaceArea, actualSurfaceArea, L"Surface area calculation is incorrect");
+		}
+
+		TEST_METHOD(TestSphereSurfaceArea)
+		{
+			// Arrange
+			double radius = 5.0;
+			Sphere sphere(radius);
+			double expectedSurfaceArea = 4 * Sphere::PI * radius * radius;
+
+			// Act
+			double actualSurfaceArea = sphere.surface_area();
+
+			// Assert
+			Assert::AreEqual(expectedSurfaceArea, actualSurfaceArea, L"Surface area calculation is incorrect");
+		}
+
+		TEST_METHOD(TestSphereSurfaceAreaNegative)
+		{
+			// Arrange
+			double radius = -5.0;
+			Sphere sphere(radius);
+			double expectedSurfaceArea = 4 * Sphere::PI * radius * radius;
+
+			// Act
+			double actualSurfaceArea = sphere.surface_area();
+
+			// Assert
+			Assert::AreEqual(expectedSurfaceArea, actualSurfaceArea, L"Surface area calculation is incorrect for negative radius");
 		}
 	};
 }
