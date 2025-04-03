@@ -1,17 +1,66 @@
 #include "String.h"
 #include <cstring>
 
-String::String(int maxLength) : Array(maxLength + 1, 0) {}
 
 String::String(const char* str, int maxLength) : Array(maxLength + 1, 0) {
     setContent(str);
 }
+String::String(int maxLength) : Array(maxLength + 1, 0) {
+	array[0] = 0; // Ініціалізуємо довжину рядка
+}
+void String::validatePosition(int pos, bool allowEnd) const {
+    int upperBound = allowEnd ? length() : length() - 1;
+    if (pos < 0 || pos > upperBound) {
+        std::cerr << "Error: Invalid position " << pos << std::endl;
+        exit(1);
+    }
+}
+
+void String::validateSubstring(const char* substr) const {
+    if (!substr) {
+        std::cerr << "Error: Null substring" << std::endl;
+        exit(1);
+    }
+}
 
 void String::setContent(const char* str) {
+    validateSubstring(str); // Перевірка на nullptr
+
     int len = strlen(str);
     if (len > getSize() - 1) len = getSize() - 1;
+
     array[0] = len;
-    for (int i = 0; i < len; ++i) array[i + 1] = str[i];
+    for (int i = 0; i < len; ++i) {
+        array[i + 1] = str[i];
+    }
+}
+
+void String::setChar(int index, char c) {
+    validatePosition(index); // Перевірка 0 <= index < length()
+    array[index + 1] = c;
+}
+
+void String::setMaxLength(int newMaxLength) {
+    if (newMaxLength < 1 || newMaxLength > 255) {
+        std::cerr << "Error: Invalid max length" << std::endl;
+        exit(1);
+    }
+
+    unsigned char* newArray = new unsigned char[newMaxLength + 1] {};
+    int copyLength = std::min(length(), newMaxLength);
+
+    newArray[0] = copyLength;
+    for (int i = 0; i < copyLength; ++i) {
+        newArray[i + 1] = array[i + 1];
+    }
+
+    delete[] array;
+    array = newArray;
+    size = newMaxLength + 1;
+}
+
+std::string String::toString() const {
+    return std::string((char*)(array + 1), length());
 }
 
 int String::length() const { return array[0]; }
@@ -61,10 +110,6 @@ void String::insert(int pos, const char* substr) {
         array[pos + i + 1] = substr[i];
     }
     array[0] += subLen;
-}
-
-std::string String::toString() const {
-    return std::string((char*)(array + 1), array[0]);
 }
 
 std::ostream& operator<<(std::ostream& os, const String& s) {
