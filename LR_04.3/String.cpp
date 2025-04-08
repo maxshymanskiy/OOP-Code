@@ -132,17 +132,16 @@ String* String::add(const Array& other) const {
     }
 
     int newLength = length() + s->length();
-    if (newLength > getSize() - 1) newLength = getSize() - 1;
+    String* result = new String(newLength + 1); // +1 для індексу довжини
 
-    String* result = new String(getSize() - 1);
-    // Копіюємо перший рядок
     for (int i = 1; i <= length(); ++i) {
-        result->array[i] = array[i];
+        result->array[i] = array[i];    // Копіюємо символи з поточного рядка
     }
-    // Додаємо другий рядок
-    for (int i = 1; i <= s->length() && (length() + i) <= result->getSize() - 1; ++i) {
-        result->array[length() + i] = s->array[i];
+    for (int i = 1; i <= s->length(); ++i) {
+        result->array[length() + i] = s->array[i];  // Копіюємо символи з другого рядка
     }
+
+    // Встановлюємо довжину результуючого рядка
     result->array[0] = newLength;
 
     return result;

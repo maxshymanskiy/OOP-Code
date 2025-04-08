@@ -1,86 +1,63 @@
-﻿//#include <iostream>
-//#include "Array.h"
-//#include "Money.h"
-//#include "String.h"
-//#include <Windows.h>
-//
-//int main() {
-//	SetConsoleOutputCP(1251); 
-//	SetConsoleCP(1251);
-//	// Демонстрація Array
-//    Money m1, m2;
-//    std::cout << "Введіть суму m1: ";
-//    std::cin >> m1;
-//    std::cout << "Введіть суму m2: ";
-//    std::cin >> m2;
-//
-//    Array* resultMoney = m1.add(m2);
-//    std::cout << "Результат додавання: " << *dynamic_cast<Money*>(resultMoney) << std::endl;
-//
-//    // Демонстрація String
-//    String s1("Hello, ", 10), s2("World!", 10);
-//    Array* resultString = s1.add(s2);
-//    std::cout << "Результат конкатенації: " << *dynamic_cast<String*>(resultString) << std::endl;
-//
-//    delete resultMoney;
-//    delete resultString;
-//    return 0;
-//}
-
-
-#include <iostream>
+﻿#include <iostream>
+#include "Array.h"
 #include "Money.h"
 #include "String.h"
+#include <typeinfo>
 #include <Windows.h>
+using namespace std;
 
-int main() {
-	SetConsoleOutputCP(1251);
+int main()
+{
 	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
-    std::cout << "=== Тестування класу Money ===" << std::endl;
+    Array* sum1 = new Money(4);  // Максимум 4 цифри
+    Array* sum2 = new Money(5);  // Максимум 5 цифр
 
-    // 1. Створення грошових сум
-    Money m1(100);  // 3 цифри гривень + 2 копійки
-    Money m2(100);
+    dynamic_cast<Money*>(sum1)->setDigits("1275");  // 12 грн 75 коп.
+    dynamic_cast<Money*>(sum2)->setDigits("9550");  // 85 грн 50 коп.
 
-    // 2. Введення даних
-    std::cout << "Введіть першу суму (100 цифр, наприклад 12345): ";
-    std::cin >> m1;  // 12345 → 123 грн 45 коп
+    cout << "Тип: " << typeid(*sum1).name() << "\n";
+    cout << "Сума 1: " << *dynamic_cast<Money*>(sum1) << "\n";
 
-    std::cout << "Введіть другу суму (100 цифр, наприклад 67890): ";
-    std::cin >> m2;  // 67890 → 678 грн 90 коп
+    cout << "Тип: " << typeid(*sum2).name() << "\n";
+    cout << "Сума 2: " << *dynamic_cast<Money*>(sum2) << "\n";
 
-    // 3. Додавання сум
-    Money* moneyResult = m1.add(m2);
-    std::cout << "Результат додавання: " << *moneyResult << std::endl;
-    delete moneyResult;
+    Array* totalSum = sum1->add(*sum2);
+    cout << "Тип: " << typeid(*totalSum).name() << "\n";
+    cout << "Сума 1 + Сума 2: " << *dynamic_cast<Money*>(totalSum) << "\n\n";
 
-    // Очистка буфера вводу
-    std::cin.ignore();
+    Array* str1 = new String("Hello", 10);  // Рядок з максимальною довжиною 10
+    Array* str2 = new String("World", 10);  // Рядок з максимальною довжиною 10
 
-    std::cout << "\n=== Тестування класу String ===" << std::endl;
+    cout << "Тип: " << typeid(*str1).name() << "\n";
+    cout << "Рядок 1: " << *dynamic_cast<String*>(str1) << "\n";
+    cout << "Довжина: " << dynamic_cast<String*>(str1)->length() << "\n\n";
 
-    // 1. Створення рядка
-    String s("Hello", 10);  // Макс. довжина 10 символів
-    std::cout << "Початковий рядок: " << s << std::endl;
+    cout << "Тип: " << typeid(*str2).name() << "\n";
+    cout << "Рядок 2: " << *dynamic_cast<String*>(str2) << "\n";
+    cout << "Довжина: " << dynamic_cast<String*>(str2)->length() << "\n\n";
 
-    // 2. Пошук підрядка
-    int pos = s.find("ell");
-    std::cout << "Підрядок 'ell' на позиції: " << pos << std::endl;
+    Array* concatStr = str1->add(*str2);
+    cout << "Тип: " << typeid(*concatStr).name() << "\n";
+    cout << "Рядок 1 + Рядок 2: " << *dynamic_cast<String*>(concatStr) << "\n";
+    cout << "Довжина: " << dynamic_cast<String*>(concatStr)->length() << "\n\n";
 
-    // 3. Видалення підрядка
-    s.remove(1, 3);  // Видаляє "ell"
-    std::cout << "Після видалення: " << s << std::endl;
+    cout << "Пошук 'or' у '" << *dynamic_cast<String*>(str2) << "': "
+        << dynamic_cast<String*>(str2)->find("or") << "\n";
 
-    // 4. Вставка підрядка
-    s.insert(1, "ola");  // Вставляє "ola" на позицію 1
-    std::cout << "Після вставки: " << s << std::endl;
+    dynamic_cast<String*>(str1)->insert(5, " beautiful");  // Вставка "beautiful"
+    cout << "Після вставки: " << *dynamic_cast<String*>(str1) << "\n";
 
-    // 5. Введення нового рядка
-    String s2(15);
-    std::cout << "Введіть новий рядок (до 15 символів): ";
-    std::cin >> s2;
-    std::cout << "Ви ввели: " << s2 << std::endl;
+    dynamic_cast<String*>(str1)->remove(6, 9); // Видалення "beautiful"
+    cout << "Після видалення: " << *dynamic_cast<String*>(str1) << "\n\n";
+
+    delete sum1;
+    delete sum2;
+    delete totalSum;
+    delete str1;
+    delete str2;
+    delete concatStr;
 
     return 0;
 }

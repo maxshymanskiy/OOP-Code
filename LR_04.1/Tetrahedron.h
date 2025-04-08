@@ -2,8 +2,7 @@
 #include "ShapeBase.h"
 
 class Tetrahedron : public ShapeBase {
-    double a;
 public:
-    Tetrahedron(double edge);
+    explicit Tetrahedron(double edge) : ShapeBase(edge) {}
     double surface_area() const override;
 };

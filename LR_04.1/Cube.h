@@ -2,8 +2,7 @@
 #include "ShapeBase.h"
 
 class Cube : public ShapeBase {
-    double side;
 public:
-    Cube(double s);
+    explicit Cube(double s) : ShapeBase(s) {}
     double surface_area() const override;
 };

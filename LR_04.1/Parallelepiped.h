@@ -2,8 +2,8 @@
 #include "ShapeBase.h"
 
 class Parallelepiped : public ShapeBase {
-    double x, y, z;
+    double y, z;  
 public:
-    Parallelepiped(double x, double y, double z);
+    Parallelepiped(double x, double y, double z) : ShapeBase(x), y(y), z(z) {}
     double surface_area() const override;
 };

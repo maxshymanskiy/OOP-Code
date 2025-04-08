@@ -6,7 +6,8 @@
 #include "../Parallelepiped.cpp"
 #include "../Sphere.h"
 #include "../Sphere.cpp"
-
+#include "../Tetrahedron.h"
+#include "../Tetrahedron.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

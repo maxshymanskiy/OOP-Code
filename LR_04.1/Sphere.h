@@ -3,10 +3,8 @@
 #include <cmath>
 
 class Sphere : public ShapeBase {
-    double radius;
-    static const double PI; 
-
+    static const double PI;
 public:
-    Sphere(double r);  
+    explicit Sphere(double r) : ShapeBase(r) {}
     double surface_area() const override;
 };
