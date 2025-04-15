@@ -86,7 +86,7 @@ String* String::substring(int start, int len) const {
         exit(1);
     }
 
-    String* result = new String(len);
+    String* result = new String(len + 1);
     memcpy(result->array + 1, array + start + 1, len);
     result->array[0] = len;
 
@@ -104,7 +104,7 @@ void String::remove(int start, int len) {
     if (start + len < length()) {
         memmove(array + start + 1, array + start + len + 1, length() - start - len);
     }
-    array[0] -= len;
+    array[0] -= len; // 6 + 5 = 11. Зменшити довжину рядка в першому байті
 }
 
 void String::removeSubstring(const char* substr) {
@@ -120,17 +120,19 @@ void String::insert(int pos, const char* substr) {
     validatePosition(pos, true);
     validateSubstring(substr);
 
-    int subLen = strlen(substr);
-    if (length() + subLen > getSize() - 1) {
+    int substrLength = strlen(substr);
+
+    if (length() + substrLength > getSize() - 1) {
         std::cerr << "Error: Not enough space for insertion" << std::endl;
         exit(1);
     }
 
     if (pos < length()) {
-        memmove(array + pos + subLen + 1, array + pos + 1, length() - pos);
+        memmove(array + pos + substrLength + 1, array + pos + 1, length() - pos);
     }
-    memcpy(array + pos + 1, substr, subLen);
-    array[0] += subLen;
+    memcpy(array + pos + 1, substr, substrLength);
+
+    array[0] += substrLength;
 }
 
 String* String::add(const Array& other) const {
@@ -148,9 +150,8 @@ String* String::add(const Array& other) const {
 
     String* result = new String(newLength);
 
-    // Copy first string content
     memcpy(result->array + 1, array + 1, length());
-    // Copy second string content (with possible truncation)
+
     int secondLength = std::min(s->length(), MAX_STRING_SIZE - 1 - length());
     memcpy(result->array + length() + 1, s->array + 1, secondLength);
 

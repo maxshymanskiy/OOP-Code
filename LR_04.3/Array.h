@@ -17,4 +17,4 @@ public:
 
 protected:
     void rangeCheck(int index) const;
-};
+};   
