@@ -1,11 +1,8 @@
 #include "Array.h"
 #include <iostream>
-#include <time.h>
-#include <stdexcept>
-#include <exception>
-#include <cmath>
 #include <Windows.h>
 using namespace std;
+
 typedef Array::value_type* TArray;
 
 Array processArray(Array::value_type* arr, int size) {

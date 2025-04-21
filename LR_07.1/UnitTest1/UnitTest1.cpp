@@ -27,7 +27,5 @@ namespace UnitTest1
 			int result = findMaxOdd(testVector);
 			Assert::AreEqual(-1, result);
 		}
-		
-        
 	};
 }
