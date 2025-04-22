@@ -27,12 +27,12 @@ list<int> createList(int size) {
 list<int> reverseList(const list<int>& originalList) {
     list<int> reversedList;
 
-    // reversedList = originalList;
-    // reversedList.reverse();
+     reversedList = originalList;
+     reversedList.reverse();
 
-    for (auto it = originalList.begin(); it != originalList.end(); ++it) {
+  /*  for (auto it = originalList.begin(); it != originalList.end(); ++it) {
         reversedList.push_front(*it);
-    }
+    }*/
 
     return reversedList;
 }

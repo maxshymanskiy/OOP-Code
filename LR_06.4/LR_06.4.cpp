@@ -121,14 +121,17 @@ bool ParameterizedArray<T>::operator!=(const ParameterizedArray<T>& other) const
 
 template <class T>
 bool ParameterizedArray<T>::operator<(const ParameterizedArray<T>& other) const {
-	int minSize = (size < other.size) ? size : other.size;
-
-	for (int i = 0; i < minSize; i++) {
-		if (data[i] < other.data[i]) return true;
-		if (data[i] > other.data[i]) return false;
+	T sum1 = T();
+	for (int i = 0; i < size; i++) {
+		sum1 = sum1 + data[i];
 	}
 
-	return size < other.size;
+	T sum2 = T();
+	for (int i = 0; i < other.size; i++) {
+		sum2 = sum2 + other.data[i];
+	}
+
+	return sum1 < sum2;
 }
 
 template <class T>

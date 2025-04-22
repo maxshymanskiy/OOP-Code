@@ -26,7 +26,7 @@ int main() {
         Fraction result = f1 - f2; // Викличе FractionOverflowException
         cout << "Результат: " << result << endl;
     }
-    catch (const FractionOverflowException& e) {
+    catch (FractionOverflowException e) {
         cout << "Відловлено FractionOverflowException (за значенням): " << e.what() << endl;
     }
 
